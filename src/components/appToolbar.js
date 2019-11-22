@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -34,95 +34,118 @@ const AppToolbar = props => {
   };
 
   return (
-    <AppBar
-      position='absolute'
-      style={{ backgroundColor: props.backgroundColor }}
-    >
-      <Toolbar variant='dense'>
-        <Typography variant='h6' style={{ flexGrow: 1 }}>
-          Paleta Colaborativa
-        </Typography>
-        {auth ? (
-          <div>
-            <IconButton edge='end' color='inherit' onClick={handleMenu}>
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorEl_1}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  console.log("Abriendo perfil");
+    <div>
+      <AppBar
+        position='fixed'
+        style={{
+          backgroundColor:
+            props.backgroundColor == null ? "blue" : props.backgroundColor
+        }}
+      >
+        <Toolbar variant='dense'>
+          <Typography
+            variant='h6'
+            style={{
+              flexGrow: 1,
+              color: props.titleColor == null ? "white" : props.titleColor
+            }}
+          >
+            Paleta Colaborativa
+          </Typography>
+          {auth ? (
+            <div>
+              <IconButton
+                edge='end'
+                style={{
+                  color: props.menuColor == null ? "white" : props.menuColor
                 }}
+                onClick={handleMenu}
               >
-                Mi Perfil
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  handleChange(false);
-                  console.log("Cerrando sesión");
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorEl_1}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
                 }}
-              >
-                Cerrar Sesion
-              </MenuItem>
-            </Menu>
-          </div>
-        ) : (
-          <div>
-            <IconButton edge='end' color='inherit' onClick={handleMenu2}>
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl_2}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={open2}
-              onClose={handleClose2}
-            >
-              <MenuItem
-                onClick={() => {
-                  handleClose2();
-                  handleChange(true);
-                  console.log("Abriendo Registro");
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
                 }}
+                open={open}
+                onClose={handleClose}
               >
-                Registrarse
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose2();
-                  handleChange(true);
-                  console.log("Iniciando sesión");
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    console.log("Abriendo perfil");
+                  }}
+                >
+                  Mi Perfil
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    handleChange(false);
+                    console.log("Cerrando sesión");
+                  }}
+                >
+                  Cerrar Sesion
+                </MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <div>
+              <IconButton
+                edge='end'
+                style={{
+                  color: props.menuColor == null ? "white" : props.menuColor
                 }}
+                onClick={handleMenu2}
               >
-                Iniciar sesión
-              </MenuItem>
-            </Menu>
-          </div>
-        )}
-      </Toolbar>
-    </AppBar>
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl_2}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={open2}
+                onClose={handleClose2}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleClose2();
+                    handleChange(true);
+                    console.log("Abriendo Registro");
+                  }}
+                >
+                  Registrarse
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose2();
+                    handleChange(true);
+                    console.log("Iniciando sesión");
+                  }}
+                >
+                  Iniciar sesión
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
