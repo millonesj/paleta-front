@@ -11,6 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { changeTextValue, CTX  } from '../contexts/Store';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,6 +53,8 @@ const useStyles = makeStyles(theme => ({
 export default function AlignItemsList() {
   
   const classes = useStyles();
+  const { allChats, sendChatAction, user } = React.useContext(CTX);
+  const topics = Object.keys(allChats)
   const [textValue, changeTextValue] = useState('');
   const [listMessages, setListMessages] = useState('');
   
@@ -60,8 +63,14 @@ export default function AlignItemsList() {
     <Card className={classes.card}>
       <CardContent>
         <List className={classes.root}>
-        <MessageLeft/>
-          <MessageRight/>
+          {
+            allChats['general'].map((chat , i )=> (
+              <div className={classes.flex} key={i}>
+                <MessageLeft message={chat.msg}/>
+              </div>
+            ))
+          }
+          {/* <MessageRight/> */}
         </List>
 
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -71,7 +80,15 @@ export default function AlignItemsList() {
           onChange={(e) => changeTextValue(e.target.value)}
           className={classes.chatBox}
         />
-        <Button variant="contained" color="primary" className={classes.button}>
+        <Button 
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        onClick={() => {
+          sendChatAction({from:user, msg: textValue, topic: 'general'});
+          changeTextValue('');
+        }}
+        >
           Send
         </Button>
         </div>

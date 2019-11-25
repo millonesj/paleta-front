@@ -4,6 +4,7 @@ import ColorSetter from "./components/colorSetter";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Chat from './components/Chat'
+import Store from './contexts/Store'
 export default function App() {
   const [toolbarColors, setToolbarColors] = useState({
     backgroundColor: "green",
@@ -25,7 +26,7 @@ export default function App() {
               backgroundColor: "#e0e0e0"
             }}
           >
-            <Chat></Chat>
+            <Store><Chat></Chat></Store>
           </Paper>
         </Grid>
         <Grid item xs={6}>
