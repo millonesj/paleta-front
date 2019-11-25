@@ -3,7 +3,7 @@ import AppToolbar from "./components/appToolbar";
 import ColorSetter from "./components/colorSetter";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-
+import Chat from './components/Chat'
 export default function App() {
   const [toolbarColors, setToolbarColors] = useState({
     backgroundColor: "green",
@@ -25,7 +25,7 @@ export default function App() {
               backgroundColor: "#e0e0e0"
             }}
           >
-            <h3 style={{ textAlign: "center" }}>Paletas</h3>
+            <Chat></Chat>
           </Paper>
         </Grid>
         <Grid item xs={6}>
@@ -49,7 +49,7 @@ export default function App() {
               backgroundColor: "#e0e0e0"
             }}
           >
-            <h3 style={{ textAlign: "center" }}>Conversaciones</h3>
+            <h3 style={{ textAlign: "center" }}>Paletas</h3>
           </Paper>
         </Grid>
       </Grid>
