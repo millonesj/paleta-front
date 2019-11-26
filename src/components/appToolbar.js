@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -7,14 +7,21 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import ColorContext from "../colorContext/colorContext";
 
-const AppToolbar = props => {
+const AppToolbar = () => {
+  const { color } = useContext(ColorContext);
   const [auth, setAuth] = React.useState(false);
   const [anchorEl_1, setAnchorEl_1] = React.useState(null);
   const [anchorEl_2, setAnchorEl_2] = React.useState(null);
   const open = Boolean(anchorEl_1);
   const open2 = Boolean(anchorEl_2);
-
+  let bgColor = color.find(
+    c => c.compId === "toolBar" && c.elementName === "background"
+  ).color;
+  let tamColor = color.find(
+    c => c.compId === "toolBar" && c.elementName === "title and menu"
+  ).color;
   const handleChange = change => {
     setAuth(change);
   };
@@ -32,14 +39,12 @@ const AppToolbar = props => {
   const handleClose2 = () => {
     setAnchorEl_2(null);
   };
-
   return (
     <div>
       <AppBar
         position='fixed'
         style={{
-          backgroundColor:
-            props.backgroundColor == null ? "blue" : props.backgroundColor
+          backgroundColor: bgColor
         }}
       >
         <Toolbar variant='dense'>
@@ -47,7 +52,7 @@ const AppToolbar = props => {
             variant='h6'
             style={{
               flexGrow: 1,
-              color: props.titleColor == null ? "white" : props.titleColor
+              color: tamColor
             }}
           >
             Paleta Colaborativa
@@ -57,7 +62,7 @@ const AppToolbar = props => {
               <IconButton
                 edge='end'
                 style={{
-                  color: props.menuColor == null ? "white" : props.menuColor
+                  color: tamColor
                 }}
                 onClick={handleMenu}
               >
@@ -102,7 +107,7 @@ const AppToolbar = props => {
               <IconButton
                 edge='end'
                 style={{
-                  color: props.menuColor == null ? "white" : props.menuColor
+                  color: tamColor
                 }}
                 onClick={handleMenu2}
               >
