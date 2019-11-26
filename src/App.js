@@ -8,6 +8,7 @@ import ColorProvider from "./colorContext/colorProvider";
 
 import Chat from "./components/Chat";
 import Store from "./contexts/Store";
+import Register from "./components/Register"
 export default function App() {
   return (
     <div>
@@ -52,6 +53,7 @@ export default function App() {
                 backgroundColor: "#e0e0e0"
               }}
             >
+              <Register/>
               <PaletteList />
             </Paper>
           </Grid>
