@@ -1,0 +1,106 @@
+[
+  [
+    {
+      "userId": "user1",
+      "userName": "jhonatan",
+      "userChats": ["chat1"],
+      "userPallet": ["paleta1", "paleta2"]
+    },
+    {
+      "userId": "user2",
+      "userName": "jhonny",
+      "userChats": ["chat1"],
+      "userPallet": ["paleta1", "paleta2"]
+    },
+    {
+      "userId": "user3",
+      "userName": "juan",
+      "userChats": ["chat1", "chat3", "chat5"],
+      "userPallet": ["paleta1", "paleta2", "paleta3"]
+    },
+    {
+      "userId": "user4",
+      "userName": "julio",
+      "userChats": ["chat1", "chat3", "chat5"],
+      "userPallet": ["paleta1", "paleta2", "paleta3"]
+    }
+  ],
+  [
+    {
+      "chatId": "chat1",
+      "chatMembers": ["user1", "user2"],
+      "chatMsgs": [
+        {
+          "msgSender": "user1",
+          "msgBody": "Hola como estas",
+          "msgDate": "22-11-2019 15:14:13"
+        },
+        {
+          "msgSender": "user2",
+          "msgBody": "bien aqui trabajando",
+          "msgDate": "22-11-2019 15:14:53"
+        }
+      ]
+    },
+    {
+      "chatId": "chat2",
+      "chatMembers": ["user1", "user3"],
+      "chatMsgs": [
+        {
+          "msgSender": "user3",
+          "msgBody": "Hola, hiciste la tarea?",
+          "msgDate": "22-11-2019 15:14:13"
+        },
+        {
+          "msgSender": "user1",
+          "msgBody": "recien la estoy terminando",
+          "msgDate": "22-11-2019 15:14:53"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "compId": "toolBar",
+      "compElements": [
+        {
+          "elementName": "background",
+          "color": "red"
+        },
+        {
+          "elementName": "title and menu",
+          "color": "white"
+        }
+      ]
+    },
+    {
+      "compId": "paletteList",
+      "compElements": [
+        {
+          "elementName": "background",
+          "color": "blue"
+        },
+        {
+          "elementName": "title",
+          "color": "white"
+        },
+        {
+          "elementName": "paletteTitleTxt",
+          "color": "white"
+        },
+        {
+          "elementName": "paletteTitleBg",
+          "color": "red"
+        },
+        {
+          "elementName": "paletteSubTitleTxt",
+          "color": "white"
+        },
+        {
+          "elementName": "paletteSubTitleBg",
+          "color": "green"
+        }
+      ]
+    }
+  ]
+]
