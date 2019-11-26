@@ -4,7 +4,7 @@ import ColorContext from "./colorContext";
 const ColorProvider = ({ children }) => {
   const [color, setColor] = useState([
     {
-      color: "red",
+      color: "blue",
       compId: "toolBar",
       elementName: "background"
     },
@@ -29,17 +29,17 @@ const ColorProvider = ({ children }) => {
       elementName: "paletteTitleTxt"
     },
     {
-      color: "red",
+      color: "blue",
       compId: "paletteList",
       elementName: "paletteTitleBg"
     },
     {
-      color: "red",
+      color: "white",
       compId: "paletteList",
       elementName: "paletteSubTitleTxt"
     },
     {
-      color: "red",
+      color: "grey",
       compId: "paletteList",
       elementName: "paletteSubTitleBg"
     }

@@ -5,7 +5,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import PaletteIcon from "@material-ui/icons/Palette";
-import AddIcon from "@material-ui/icons/Add";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -30,11 +29,27 @@ const PaletteItem = props => {
   const handleClick = () => {
     setOpenPalette(!openPalette);
   };
+  let pTitleBg = color.find(c => {
+    return c.compId === "paletteList" && c.elementName === "paletteTitleBg";
+  }).color;
+  let pTitleTxt = color.find(c => {
+    return c.compId === "paletteList" && c.elementName === "paletteTitleTxt";
+  }).color;
+  let pSubTitleBg = color.find(c => {
+    return c.compId === "paletteList" && c.elementName === "paletteSubTitleBg";
+  }).color;
+  let pSubTitleTxt = color.find(c => {
+    return c.compId === "paletteList" && c.elementName === "paletteSubTitleTxt";
+  }).color;
   return (
     <div>
-      <ListItem button onClick={handleClick}>
+      <ListItem
+        button
+        onClick={handleClick}
+        style={{ backgroundColor: pTitleBg, color: pTitleTxt }}
+      >
         <ListItemIcon>
-          <PaletteIcon />
+          <PaletteIcon style={{ color: pTitleTxt }} />
         </ListItemIcon>
         <ListItemText primary={props.compId} />
         {openPalette ? <ExpandLess /> : <ExpandMore />}
@@ -42,22 +57,12 @@ const PaletteItem = props => {
       <Collapse in={openPalette} timeout='auto' unmountOnExit>
         <List component='div' disablePadding>
           {props.compElements.map(e => {
-            console.log(props.compId);
-            console.log(e);
             return (
               <ListItem
                 button
                 className={classes.nested}
                 key={e.elementName}
-                style={{
-                  backgroundColor: color.find(c => {
-                    console.log(c.compId);
-                    return (
-                      c.compId === props.compId &&
-                      c.elementName === e.elementName
-                    );
-                  }).color
-                }}
+                style={{ backgroundColor: pSubTitleBg, color: pSubTitleTxt }}
               >
                 <ListItemText primary={e.elementName} />
               </ListItem>
@@ -70,18 +75,27 @@ const PaletteItem = props => {
 };
 
 const PaletteList = () => {
+  const { color } = useContext(ColorContext);
   const classes = useStyles();
-
+  let pBackground = color.find(c => {
+    return c.compId === "paletteList" && c.elementName === "background";
+  }).color;
+  let pTitle = color.find(c => {
+    return c.compId === "paletteList" && c.elementName === "title";
+  }).color;
   return (
     <List
       component='nav'
       aria-labelledby='nested-list-subheader'
       subheader={
         <ListSubheader component='div' id='nested-list-subheader'>
-          <h3 style={{ textAlign: "center" }}>Lista de paletas</h3>
+          <h3 style={{ textAlign: "center", color: pTitle }}>
+            Lista de paletas
+          </h3>
         </ListSubheader>
       }
       className={classes.root}
+      style={{ backgroundColor: pBackground }}
     >
       {temporalDB[2].map(component => {
         return <div key={component.compId}>{PaletteItem(component)}</div>;

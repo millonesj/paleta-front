@@ -4,20 +4,66 @@ import Grid from "@material-ui/core/Grid";
 import { Panel as ColorPickerPanel } from "rc-color-picker";
 import ColorContext from "../colorContext/colorContext";
 
-var colorList = [];
+var colorList = [
+  {
+    color: "blue",
+    compId: "toolBar",
+    elementName: "background"
+  },
+  {
+    color: "white",
+    compId: "toolBar",
+    elementName: "title and menu"
+  },
+  {
+    color: "grey",
+    compId: "paletteList",
+    elementName: "background"
+  },
+  {
+    color: "white",
+    compId: "paletteList",
+    elementName: "title"
+  },
+  {
+    color: "white",
+    compId: "paletteList",
+    elementName: "paletteTitleTxt"
+  },
+  {
+    color: "blue",
+    compId: "paletteList",
+    elementName: "paletteTitleBg"
+  },
+  {
+    color: "white",
+    compId: "paletteList",
+    elementName: "paletteSubTitleTxt"
+  },
+  {
+    color: "grey",
+    compId: "paletteList",
+    elementName: "paletteSubTitleBg"
+  }
+];
 const BtnColor = props => {
   const [btnColor, setBtnColor] = useState("grey");
+  let index = 0;
   return (
     <button
       style={{ backgroundColor: btnColor }}
       onClick={() => {
-        colorList.push({
+        index = colorList.findIndex(c => {
+          return (
+            c.compId === props.compId && c.elementName === props.elementName
+          );
+        });
+        colorList[index] = {
           compId: props.compId,
           elementName: props.elementName,
           color: props.pickedColor
-        });
+        };
         setBtnColor(props.pickedColor);
-        console.log(colorList);
       }}
     >
       {props.elementName}: {btnColor}
