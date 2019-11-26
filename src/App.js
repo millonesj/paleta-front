@@ -6,6 +6,8 @@ import Paper from "@material-ui/core/Paper";
 import PaletteList from "./components/paletas";
 import ColorProvider from "./colorContext/colorProvider";
 
+import Chat from "./components/Chat";
+import Store from "./contexts/Store";
 export default function App() {
   return (
     <div>
@@ -23,7 +25,9 @@ export default function App() {
                 backgroundColor: "#e0e0e0"
               }}
             >
-              <h3 style={{ textAlign: "center" }}>Conversaciones</h3>
+              <Store>
+                <Chat></Chat>
+              </Store>
             </Paper>
           </Grid>
           <Grid item xs={6}>
