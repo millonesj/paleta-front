@@ -46,8 +46,14 @@ const useStyles = makeStyles(theme => ({
     height: 'calc(100% - 100px)',
   },
   card: {
+    display: "flex",
     maxWidth: 800,
   },
+  CardContent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  }
 }));
 
 export default function AlignItemsList() {
@@ -61,7 +67,7 @@ export default function AlignItemsList() {
 
   return (
     <Card className={classes.card}>
-      <CardContent>
+      <CardContent className={classes.CardContent}>
         <List className={classes.root}>
           {
             allChats['general'].map((chat , i )=> (

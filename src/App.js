@@ -20,6 +20,7 @@ export default function App() {
         <Grid item xs={3}>
           <Paper
             style={{
+              display: "flex",
               marginInline: "4px",
               height: "87vh",
               padding: "8px",
