@@ -1,16 +1,34 @@
 import "rc-color-picker/assets/index.css";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-//import ColorPicker from "rc-color-picker";
 import { Panel as ColorPickerPanel } from "rc-color-picker";
+import ColorContext from "../colorContext/colorContext";
 
-const ColorSetter = props => {
-  const [tbColor, setTbColor] = useState("#345679");
-  const [btColor1, setBtColor1] = useState("grey");
-  const [btColor2, setBtColor2] = useState("grey");
+var colorList = [];
+const BtnColor = props => {
+  const [btnColor, setBtnColor] = useState("grey");
+  return (
+    <button
+      style={{ backgroundColor: btnColor }}
+      onClick={() => {
+        colorList.push({
+          compId: props.compId,
+          elementName: props.elementName,
+          color: props.pickedColor
+        });
+        setBtnColor(props.pickedColor);
+        console.log(colorList);
+      }}
+    >
+      {props.elementName}: {btnColor}
+    </button>
+  );
+};
+const ColorSetter = () => {
+  const { setColor } = useContext(ColorContext);
+  const [pickedColor, setPickedColor] = useState("#345679");
   function changeHandler(colorObj) {
-    console.log(colorObj);
-    setTbColor(colorObj.color);
+    setPickedColor(colorObj.color);
   }
   return (
     <div style={{ textAlign: "center" }}>
@@ -19,7 +37,7 @@ const ColorSetter = props => {
         <Grid item xs={4}>
           <ColorPickerPanel
             enableAlpha={false}
-            color={tbColor}
+            color={pickedColor}
             onChange={changeHandler}
             mode='RGB'
           />
@@ -28,32 +46,56 @@ const ColorSetter = props => {
           <div>
             <h3>Colores seleccionados</h3>
             <p>App Toolbar</p>
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "toolBar",
+              elementName: "background"
+            })}
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "toolBar",
+              elementName: "title and menu"
+            })}
+            <p>Lista de paletas</p>
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "paletteList",
+              elementName: "background"
+            })}
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "paletteList",
+              elementName: "title"
+            })}
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "paletteList",
+              elementName: "paletteTitleTxt"
+            })}
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "paletteList",
+              elementName: "paletteTitleBg"
+            })}
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "paletteList",
+              elementName: "paletteSubTitleTxt"
+            })}
+            {BtnColor({
+              pickedColor: pickedColor,
+              compId: "paletteList",
+              elementName: "paletteSubTitleBg"
+            })}
+            <br />
+            <br />
             <button
-              style={{ backgroundColor: btColor1 }}
               onClick={() => {
-                setBtColor1(tbColor);
+                console.log("Aplicando colores");
+                setColor(colorList);
               }}
             >
-              Background: {btColor1}
-            </button>
-            <button
-              style={{ backgroundColor: btColor2 }}
-              onClick={() => {
-                setBtColor2(tbColor);
-              }}
-            >
-              Title and menu: {btColor2}
-            </button>
-            <button
-              onClick={() => {
-                props.setToolbarColors({
-                  backgroundColor: btColor1,
-                  titleColor: btColor2,
-                  menuColor: btColor2
-                });
-              }}
-            >
-              Aplicar Color
+              Aplicar Colores
             </button>
           </div>
         </Grid>
