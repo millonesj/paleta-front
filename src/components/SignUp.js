@@ -49,7 +49,7 @@ export default function FormDialog(prop) {
   };
 
   const getToken = async (name,email, password) => {
-    const { data } = await Axios.post('http://localhost:3002/users/register', {
+    const { data } = await Axios.post('/users/register', {
       name,
       email,
       password

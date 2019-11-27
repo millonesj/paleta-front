@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { setToken, deleteToken, getToken, initAxiosInterceptors } from '../Helpers/auth-helper';
+import Axios from 'axios';
+
+initAxiosInterceptors();
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,6 +39,30 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
+
+  const [user, setUser] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
+
+  useEffect(() => {
+    async function loadUser() {
+      if(!getToken()) {
+        console.log('...1');
+        setLoadingUser(false);
+        return;
+      }
+
+      try {
+        const { data:user } = await Axios.get('/users/whoami');
+        setUser(user);
+        setLoadingUser(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    loadUser();
+
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
