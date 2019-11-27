@@ -71,7 +71,7 @@ const BtnColor = props => {
   );
 };
 const ColorSetter = () => {
-  const { setColor } = useContext(ColorContext);
+  const { setColorBy } = useContext(ColorContext);
   const [pickedColor, setPickedColor] = useState("#345679");
   function changeHandler(colorObj) {
     setPickedColor(colorObj.color);
@@ -138,7 +138,7 @@ const ColorSetter = () => {
             <button
               onClick={() => {
                 console.log("Aplicando colores");
-                setColor(colorList);
+                setColorBy(colorList);
               }}
             >
               Aplicar Colores

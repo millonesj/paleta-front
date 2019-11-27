@@ -44,11 +44,21 @@ const ColorProvider = ({ children }) => {
       elementName: "paletteSubTitleBg"
     }
   ]);
+  const setColorBy = color => {
+    setColor(state => {
+      return state.map((colorBefore, index) => {
+        return {
+          ...colorBefore,
+          color: color[index].color
+        };
+      });
+    });
+  };
   return (
     <ColorContext.Provider
       value={{
         color,
-        setColor
+        setColorBy
       }}
     >
       {children}
