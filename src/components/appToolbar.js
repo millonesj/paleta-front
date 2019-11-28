@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import ColorContext from "../colorContext/colorContext";
 
-const AppToolbar = () => {
+const AppToolbar = props => {
   const { color } = useContext(ColorContext);
   const [auth, setAuth] = React.useState(false);
   const [anchorEl_1, setAnchorEl_1] = React.useState(null);
@@ -46,7 +46,7 @@ const AppToolbar = () => {
               color: tamColor
             }}
           >
-            Paleta Colaborativa
+            Paleta Colaborativa: {props.title}
           </Typography>
           {auth ? (
             <div>
