@@ -7,10 +7,12 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import ColorContext from "../colorContext/colorContext";
+import { SnackbarContext } from "../contexts/SnackbarContext";
 
 const AppToolbar = props => {
   const { color } = useContext(ColorContext);
-  const [auth, setAuth] = React.useState(false);
+  const { setVisible, setMessage } = useContext(SnackbarContext);
+  const [auth, setAuth] = React.useState(true);
   const [anchorEl_1, setAnchorEl_1] = React.useState(null);
   const open = Boolean(anchorEl_1);
   let bgColor = color.find(
@@ -28,6 +30,8 @@ const AppToolbar = props => {
   };
 
   const handleClose = () => {
+    setMessage("Cerrando sesión");
+    setVisible(true);
     setAnchorEl_1(null);
   };
   return (

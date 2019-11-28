@@ -1,17 +1,18 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
-export const SnackbarContext = createContext(false);
+const SnackbarContext = createContext();
 
-const SnackbarContextProvider = ({children}) => {
-
+const SnackbarContextProvider = ({ children }) => {
   const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   return (
-    <SnackbarContext.Provider value={{visible, setVisible, message, setMessage}}>
+    <SnackbarContext.Provider
+      value={{ visible, setVisible, message, setMessage }}
+    >
       {children}
     </SnackbarContext.Provider>
-  )
-}
+  );
+};
 
-export default SnackbarContextProvider;
+export { SnackbarContext, SnackbarContextProvider };
