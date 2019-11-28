@@ -11,6 +11,7 @@ import Link from '@material-ui/core/Link';
 import { parseAsync } from '@babel/core';
 import { setToken, deleteToken } from '../Helpers/auth-helper';
 import Axios from 'axios';
+import { navigate } from '@reach/router';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -38,6 +39,7 @@ export default function FormDialog(prop) {
   const [name, setName ] = useState('');
   const [email, setEmail ] = useState('');
   const [password, setPassword ] = useState('');
+  const [messageResponse, setMessageResponse ] = useState('');
 
 
   const handleClickOpen = () => {
@@ -49,12 +51,19 @@ export default function FormDialog(prop) {
   };
 
   const getToken = async (name,email, password) => {
-    const { data } = await Axios.post('/users/register', {
-      name,
-      email,
-      password
-    });
-    setToken(data.token)
+
+    try {
+      Axios.get('/users/register', { name,  email, password  }).then((data) => {
+        setToken(data.token);
+        navigate('/dashboard/');
+      }).catch((error) => {
+        setMessageResponse(error.message);
+      });
+    } catch (error) {
+      setMessageResponse(error);
+      console.log(error);
+    }
+
   }
 
   const classes = useStyles();
@@ -129,6 +138,7 @@ export default function FormDialog(prop) {
             </Grid>
           </Grid>
           </form>
+          <div>{messageResponse}</div>
           </div>
         </Container>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setToken, deleteToken, getToken, initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';
+import { navigate } from '@reach/router';
+import SnackbarContext from '../contexts/SnackbarContext'
 
 initAxiosInterceptors();
 
@@ -42,11 +44,13 @@ export default function SignIn() {
 
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
-
+  const [email, setEmail ] = useState('');
+  const [password, setPassword ] = useState('');
+  const [messageResponse, setMessageResponse ] = useState('');
+  
   useEffect(() => {
     async function loadUser() {
       if(!getToken()) {
-        console.log('...1');
         setLoadingUser(false);
         return;
       }
@@ -55,6 +59,7 @@ export default function SignIn() {
         const { data:user } = await Axios.get('/users/whoami');
         setUser(user);
         setLoadingUser(false);
+        navigate('/dashboard/');
       } catch (error) {
         console.log(error);
       }
@@ -63,6 +68,23 @@ export default function SignIn() {
     loadUser();
 
   }, []);
+
+  const login = async (email, password) => {
+
+    try {
+      Axios.post('/users/login', { email, password  }).then((data) => {
+        setToken(data.token);
+        navigate('/dashboard/');
+      }).catch((error) => {
+        setMessageResponse(error.message);
+      });
+      
+    } catch (error) {
+      setMessageResponse(error);
+      console.log(error);
+    }
+
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -102,7 +124,11 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
-            type="submit"
+            onClick={() => {
+              login( email, password);
+              setEmail('');
+              setPassword('');
+            }}
             fullWidth
             variant="contained"
             color="primary"
@@ -117,6 +143,7 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
+          <div>{messageResponse}</div>
         </form>
       </div>
       <Box mt={8}>
