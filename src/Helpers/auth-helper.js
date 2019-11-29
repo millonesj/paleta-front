@@ -18,7 +18,7 @@ export function deleteToken(e) {
 export async function getCurrentUser() {
   if (!getToken()) return false;
   try {
-    let response = await Axios.get("/api/v1/auth/current");
+    let response = await Axios.get("/users/whoami");
     return response.data;
   } catch (error) {
     return false;
