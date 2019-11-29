@@ -51,7 +51,6 @@ export default function SignIn() {
   const [loadingUser, setLoadingUser] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [messageResponse, setMessageResponse] = useState("");
 
   useEffect(() => {
     async function loadUser() {
@@ -84,12 +83,11 @@ export default function SignIn() {
           setVisible(true);
         })
         .catch(error => {
-          setMessage(error.message);
+          let message = error.response.data.message;
+          setMessage(message );
           setVisible(true);
-          setMessageResponse(error.message);
         });
     } catch (error) {
-      setMessageResponse(error);
       console.log(error);
     }
   };
@@ -113,6 +111,8 @@ export default function SignIn() {
             id='email'
             label='Email Address'
             name='email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             autoComplete='email'
             autoFocus
           />
@@ -122,6 +122,8 @@ export default function SignIn() {
             required
             fullWidth
             name='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             label='Password'
             type='password'
             id='password'
@@ -151,7 +153,6 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
-          <div>{messageResponse}</div>
         </form>
       </div>
       <Box mt={8}></Box>
