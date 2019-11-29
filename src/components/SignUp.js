@@ -52,7 +52,7 @@ export default function FormDialog(prop) {
 
   const getToken = async (name, email, password) => {
     try {
-      Axios.get("/users/register", { name, email, password })
+      Axios.post("/users/register", { name, email, password })
         .then(data => {
           setToken(data.token);
           navigate("/dashboard/");
