@@ -3,6 +3,8 @@ import React, { useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Panel as ColorPickerPanel } from "rc-color-picker";
 import ColorContext from "../colorContext/colorContext";
+import ColorPicker from "rc-color-picker";
+import Box from "@material-ui/core/Box";
 
 var colorList = [
   {
@@ -76,21 +78,30 @@ const ColorSetter = () => {
   function changeHandler(colorObj) {
     setPickedColor(colorObj.color);
   }
+
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Seleccionar color</h1>
+      <h2>Seleccionar color</h2>
       <Grid container>
-        <Grid item xs={4}>
-          <ColorPickerPanel
-            enableAlpha={false}
-            color={pickedColor}
-            onChange={changeHandler}
-            mode='RGB'
-          />
+        <Grid item xs={12} lg={4}>
+          <Box display={{ xs: "none", lg: "block" }}>
+            <ColorPickerPanel
+              enableAlpha={false}
+              color={pickedColor}
+              onChange={changeHandler}
+              mode='RGB'
+            />
+          </Box>
+          <Box display={{ xs: "block", lg: "none" }}>
+            <ColorPicker
+              animation='slide-up'
+              color={pickedColor}
+              onChange={changeHandler}
+            />
+          </Box>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12} lg={8}>
           <div>
-            <h3>Colores seleccionados</h3>
             <p>App Toolbar</p>
             {BtnColor({
               pickedColor: pickedColor,
