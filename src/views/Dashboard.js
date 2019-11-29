@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppToolbar from "../components/appToolbar";
 import ColorSetter from "../components/colorSetter";
 import PaletteList from "../components/paletas";
@@ -15,14 +15,23 @@ import { getCurrentUser, deleteToken } from "../Helpers/auth-helper";
 
 const Dashboard = () => {
   const [name, setName] = useState("");
-  const currentUser = getCurrentUser();
-  currentUser.then(value => {
-    if (!value) {
-      console.log("no hay usuario");
-      navigate("/");
+  const currentUser = null;
+  
+  useEffect(() => {
+
+    const existUser = async()  => {
+      currentUser = await getCurrentUser();
+      if (!currentUser) {
+        console.log("no hay usuario");
+        navigate("/");
+      }
+      console.log(currentUser);
+
     }
-    console.log(value);
+
+      
   });
+  
   return (
     <div>
       <ColorProvider>
