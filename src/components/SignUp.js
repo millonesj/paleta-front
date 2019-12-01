@@ -53,16 +53,16 @@ export default function FormDialog(prop) {
   const getToken = async (name, email, password) => {
     try {
       Axios.post('/users/register', { name, email, password })
-        .then(data => {
-          setToken(data.token);
+        .then(response => {
+          setToken(response.data.token);
           navigate('/dashboard/');
           setMessage('Registrando');
           setVisible(true);
         })
-        .catch(error => {
-          setMessage(error.message);
+        .catch(response => {
+          setMessage(response.data.message);
           setVisible(true);
-          setMessageResponse(error.message);
+          setMessageResponse(response.data.message);
         });
     } catch (error) {
       setMessageResponse(error);
