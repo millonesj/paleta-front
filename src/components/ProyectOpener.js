@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -35,20 +35,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 var currentUser = '';
-var proyectList = [];
 export default function ProyectOpener() {
   const classes = useStyles();
+  const [proyectList, setProyectList] = useState([]);
   const { setVisible, setMessage } = useContext(SnackbarContext);
   const { setCurrentProyectBy } = useContext(ProyectContext);
 
-  getCurrentUser().then(async response => {
-    currentUser = response.user.id;
-  });
-  Axios.get('/proyects').then(async response => {
-    proyectList = await response.data.filter(data => {
-      return data.owner === currentUser;
+  useEffect(() => {
+    getCurrentUser().then(response => {
+      currentUser = response.user.id;
+      Axios.get('/proyects').then(response => {
+        let proyectFilters = response.data.filter(data => {
+          return data.owner === currentUser;
+        });
+        setProyectList(proyectFilters);
+      });
     });
-  });
+  }, []);
+
   const openNewProyect = () => {
     Axios.post('/proyects/')
       .then(response => {
@@ -93,12 +97,14 @@ export default function ProyectOpener() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {proyectList.map(proyect => {
-                return <MenuItem value={10}>{proyect.name}</MenuItem>;
+              {proyectList.map((proyect, indice) => {
+                console.log(proyect);
+                return (
+                  <MenuItem value={10} key={indice}>
+                    {proyect.name}
+                  </MenuItem>
+                );
               })}
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
             </Select>
             <Button
               variant="contained"
