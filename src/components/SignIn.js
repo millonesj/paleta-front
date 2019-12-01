@@ -76,11 +76,11 @@ export default function SignIn() {
     try {
       setMessage("Iniciando sesión");
       Axios.post("/users/login", { email, password })
-        .then(data => {
-          setToken(data.token);
-          navigate("/dashboard/");
+        .then(response => {
           setMessage("Iniciando sesión");
           setVisible(true);
+          setToken(response.data.token);
+          navigate("/proyect-opener/");
         })
         .catch(error => {
           let message = error.response.data.message;
