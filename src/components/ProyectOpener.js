@@ -18,10 +18,9 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-
+import { ProyectContext } from '../contexts/ProyectContext'
 
 initAxiosInterceptors();
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(4),
@@ -41,38 +40,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+export default function ProyectOpener() {
   const classes = useStyles();
   const { setVisible, setMessage } = useContext(SnackbarContext);
-  const [user, setUser] = useState(null);
+  const { currentProyect, setCurrentProyect } = useContext(ProyectContext);
   const [loadingUser, setLoadingUser] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    async function loadUser() {
-      if (!getToken()) {
-        setLoadingUser(false);
-        return;
-      }
-
-      try {
-        const { data: user } = await Axios.get("/users/whoami");
-        setUser(user);
-        setLoadingUser(false);
-        navigate("/dashboard/");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    loadUser();
-  }, []);
-
-
+  
+  const openNewProyect = () => {
+    Axios.post('/proyects/')
+    .then((response) => {
+      console.log(response.data.payload);
+      let proyect = response.data.payload;
+      setCurrentProyect(proyect);
+      navigate("/dashboard/");
+    })
+    .catch(response => {
+      setMessage(JSON.stringify(response.data))
+    });
+  }
 
   return (
-    <Container component='main' maxWidth='xs' maxHeight='xs'>
+    <Container component='main' maxWidth='xs'>
       <Paper className={classes.paper}>
       <CssBaseline />
       <div className={classes.paper}>
@@ -81,16 +69,16 @@ export default function SignIn() {
           variant="contained"
           color="primary"
           className={classes.margin}
+          onClick={()=>{openNewProyect()}}
           fullWidth>
           Open New Proyect
         </Button>
         <InputLabel 
-          id="demo-simple-select-helper-label">Open Existing Proyect</InputLabel>
+          id="open-existing-proyect-label">Open Existing Proyect</InputLabel>
         <Select
-          labelId="demo-simple-select-helper-label"
+          labelId="open-existing-proyect-label"
           fullWidth
-
-          id="demo-simple-select-helper"
+          id="open-existing-proyect"
           /* value={age}
           onChange={handleChange} */
         >
