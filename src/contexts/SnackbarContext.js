@@ -1,10 +1,10 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState } from 'react';
 
 const SnackbarContext = createContext();
 
 const SnackbarContextProvider = ({ children }) => {
   const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   return (
     <SnackbarContext.Provider

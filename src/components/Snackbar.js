@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { SnackbarContext } from "../contexts/SnackbarContext";
+import React, { useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { SnackbarContext } from '../contexts/SnackbarContext';
 
 const useStyles = makeStyles(theme => ({
   close: {
@@ -26,28 +26,28 @@ export default function SimpleSnackbar(prop) {
     }*/
 
     setVisible(false);
-    console.log("cerrando snackbar");
+    console.log('cerrando snackbar');
   };
 
   return (
     <div>
       <Snackbar
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
+          vertical: 'bottom',
+          horizontal: 'left'
         }}
         open={visible}
         autoHideDuration={2000}
         onClose={handleClose}
         ContentProps={{
-          "aria-describedby": "message-id"
+          'aria-describedby': 'message-id'
         }}
-        message={<span id='message-id'>{message}</span>}
+        message={<span id="message-id">{message}</span>}
         action={[
           <IconButton
-            key='close'
-            aria-label='close'
-            color='inherit'
+            key="close"
+            aria-label="close"
+            color="inherit"
             className={classes.close}
             onClick={handleClose}
           >

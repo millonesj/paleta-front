@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import ColorContext from "../colorContext/colorContext";
-import { SnackbarContext } from "../contexts/SnackbarContext";
+import React, { useContext } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import ColorContext from '../colorContext/colorContext';
+import { SnackbarContext } from '../contexts/SnackbarContext';
 
 const AppToolbar = props => {
   const { color } = useContext(ColorContext);
@@ -16,10 +16,10 @@ const AppToolbar = props => {
   const [anchorEl_1, setAnchorEl_1] = React.useState(null);
   const open = Boolean(anchorEl_1);
   let bgColor = color.find(
-    c => c.compId === "toolBar" && c.elementName === "background"
+    c => c.compId === 'toolBar' && c.elementName === 'background'
   ).color;
   let tamColor = color.find(
-    c => c.compId === "toolBar" && c.elementName === "title and menu"
+    c => c.compId === 'toolBar' && c.elementName === 'title and menu'
   ).color;
   const handleChange = change => {
     setAuth(change);
@@ -30,21 +30,21 @@ const AppToolbar = props => {
   };
 
   const handleClose = () => {
-    setMessage("Cerrando sesión");
+    setMessage('Cerrando sesión');
     setVisible(true);
     setAnchorEl_1(null);
   };
   return (
     <div>
       <AppBar
-        position='fixed'
+        position="fixed"
         style={{
           backgroundColor: bgColor
         }}
       >
-        <Toolbar variant='dense'>
+        <Toolbar variant="dense">
           <Typography
-            variant='h6'
+            variant="h6"
             style={{
               flexGrow: 1,
               color: tamColor
@@ -55,7 +55,7 @@ const AppToolbar = props => {
           {auth ? (
             <div>
               <IconButton
-                edge='end'
+                edge="end"
                 style={{
                   color: tamColor
                 }}
@@ -64,16 +64,16 @@ const AppToolbar = props => {
                 <AccountCircle />
               </IconButton>
               <Menu
-                id='menu-appbar'
+                id="menu-appbar"
                 anchorEl={anchorEl_1}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 open={open}
                 onClose={handleClose}
@@ -82,7 +82,7 @@ const AppToolbar = props => {
                   onClick={() => {
                     handleClose();
                     handleChange(false);
-                    console.log("Cerrando sesión");
+                    console.log('Cerrando sesión');
                   }}
                 >
                   Cerrar Sesion

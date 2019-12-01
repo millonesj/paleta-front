@@ -1,6 +1,6 @@
-import Axios from "axios";
+import Axios from 'axios';
 
-const TOKEN_KEY = "PALETTE_TOKEN_KEY";
+const TOKEN_KEY = 'PALETTE_TOKEN_KEY';
 
 export function setToken(token) {
   localStorage.setItem(TOKEN_KEY, token);
@@ -12,13 +12,13 @@ export function getToken() {
 export function deleteToken(e) {
   e.preventDefault();
   localStorage.removeItem(TOKEN_KEY);
-  window.location = "/";
+  window.location = '/';
 }
 
 export async function getCurrentUser() {
   if (!getToken()) return false;
   try {
-    let response = await Axios.get("/users/whoami");
+    let response = await Axios.get('/users/whoami');
     return response.data;
   } catch (error) {
     return false;
@@ -41,7 +41,7 @@ export function initAxiosInterceptors() {
     error => {
       if (error.response.status === 401) {
         deleteToken();
-        window.location = "/";
+        window.location = '/';
       } else {
         return Promise.reject(error);
       }

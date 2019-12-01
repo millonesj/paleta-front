@@ -1,55 +1,55 @@
-import "rc-color-picker/assets/index.css";
-import React, { useState, useContext } from "react";
-import Grid from "@material-ui/core/Grid";
-import { Panel as ColorPickerPanel } from "rc-color-picker";
-import ColorContext from "../colorContext/colorContext";
-import ColorPicker from "rc-color-picker";
-import Box from "@material-ui/core/Box";
+import 'rc-color-picker/assets/index.css';
+import React, { useState, useContext } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { Panel as ColorPickerPanel } from 'rc-color-picker';
+import ColorContext from '../colorContext/colorContext';
+import ColorPicker from 'rc-color-picker';
+import Box from '@material-ui/core/Box';
 
 var colorList = [
   {
-    color: "blue",
-    compId: "toolBar",
-    elementName: "background"
+    color: 'blue',
+    compId: 'toolBar',
+    elementName: 'background'
   },
   {
-    color: "white",
-    compId: "toolBar",
-    elementName: "title and menu"
+    color: 'white',
+    compId: 'toolBar',
+    elementName: 'title and menu'
   },
   {
-    color: "grey",
-    compId: "paletteList",
-    elementName: "background"
+    color: 'grey',
+    compId: 'paletteList',
+    elementName: 'background'
   },
   {
-    color: "white",
-    compId: "paletteList",
-    elementName: "title"
+    color: 'white',
+    compId: 'paletteList',
+    elementName: 'title'
   },
   {
-    color: "white",
-    compId: "paletteList",
-    elementName: "paletteTitleTxt"
+    color: 'white',
+    compId: 'paletteList',
+    elementName: 'paletteTitleTxt'
   },
   {
-    color: "blue",
-    compId: "paletteList",
-    elementName: "paletteTitleBg"
+    color: 'blue',
+    compId: 'paletteList',
+    elementName: 'paletteTitleBg'
   },
   {
-    color: "white",
-    compId: "paletteList",
-    elementName: "paletteSubTitleTxt"
+    color: 'white',
+    compId: 'paletteList',
+    elementName: 'paletteSubTitleTxt'
   },
   {
-    color: "grey",
-    compId: "paletteList",
-    elementName: "paletteSubTitleBg"
+    color: 'grey',
+    compId: 'paletteList',
+    elementName: 'paletteSubTitleBg'
   }
 ];
 const BtnColor = props => {
-  const [btnColor, setBtnColor] = useState("grey");
+  const [btnColor, setBtnColor] = useState('grey');
   let index = 0;
   return (
     <button
@@ -74,27 +74,27 @@ const BtnColor = props => {
 };
 const ColorSetter = () => {
   const { setColorBy } = useContext(ColorContext);
-  const [pickedColor, setPickedColor] = useState("#345679");
+  const [pickedColor, setPickedColor] = useState('#345679');
   function changeHandler(colorObj) {
     setPickedColor(colorObj.color);
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: 'center' }}>
       <h2>Seleccionar color</h2>
       <Grid container>
         <Grid item xs={12} lg={4}>
-          <Box display={{ xs: "none", lg: "block" }}>
+          <Box display={{ xs: 'none', lg: 'block' }}>
             <ColorPickerPanel
               enableAlpha={false}
               color={pickedColor}
               onChange={changeHandler}
-              mode='RGB'
+              mode="RGB"
             />
           </Box>
-          <Box display={{ xs: "block", lg: "none" }}>
+          <Box display={{ xs: 'block', lg: 'none' }}>
             <ColorPicker
-              animation='slide-up'
+              animation="slide-up"
               color={pickedColor}
               onChange={changeHandler}
             />
@@ -105,50 +105,50 @@ const ColorSetter = () => {
             <p>App Toolbar</p>
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "toolBar",
-              elementName: "background"
+              compId: 'toolBar',
+              elementName: 'background'
             })}
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "toolBar",
-              elementName: "title and menu"
+              compId: 'toolBar',
+              elementName: 'title and menu'
             })}
             <p>Lista de paletas</p>
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "paletteList",
-              elementName: "background"
+              compId: 'paletteList',
+              elementName: 'background'
             })}
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "paletteList",
-              elementName: "title"
+              compId: 'paletteList',
+              elementName: 'title'
             })}
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "paletteList",
-              elementName: "paletteTitleTxt"
+              compId: 'paletteList',
+              elementName: 'paletteTitleTxt'
             })}
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "paletteList",
-              elementName: "paletteTitleBg"
+              compId: 'paletteList',
+              elementName: 'paletteTitleBg'
             })}
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "paletteList",
-              elementName: "paletteSubTitleTxt"
+              compId: 'paletteList',
+              elementName: 'paletteSubTitleTxt'
             })}
             {BtnColor({
               pickedColor: pickedColor,
-              compId: "paletteList",
-              elementName: "paletteSubTitleBg"
+              compId: 'paletteList',
+              elementName: 'paletteSubTitleBg'
             })}
             <br />
             <br />
             <button
               onClick={() => {
-                console.log("Aplicando colores");
+                console.log('Aplicando colores');
                 setColorBy(colorList);
               }}
             >
