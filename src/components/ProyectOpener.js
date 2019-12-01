@@ -42,14 +42,11 @@ export default function ProyectOpener() {
   const { setCurrentProyectBy } = useContext(ProyectContext);
 
   useEffect(() => {
-    getCurrentUser().then(response => {
-      currentUser = response.user.id;
-      Axios.get('/proyects').then(response => {
-        let proyectFilters = response.data.filter(data => {
-          return data.owner === currentUser;
-        });
-        setProyectList(proyectFilters);
+    Axios.get('/proyects').then(response => {
+      let proyectFilters = response.data.filter(data => {
+        return data.owner === currentUser;
       });
+      setProyectList(proyectFilters);
     });
   }, []);
 
