@@ -5,17 +5,15 @@ import AppToolbar from '../components/appToolbar';
 import ColorSetter from '../components/colorSetter';
 import PaletteList from '../components/paletas';
 import ColorProvider from '../colorContext/colorProvider';
-import { Router, Link } from '@reach/router';
 import { navigate } from '@reach/router';
 import Chat from '../components/Chat';
 import Store from '../contexts/Store';
-import SignIn from '../components/SignIn';
 import ShareCard from '../components/shareCard';
 import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
 
 const Dashboard = () => {
   const [name, setName] = useState('');
-  const currentUser = null;
+  var currentUser = null;
 
   useEffect(() => {
     const existUser = async () => {

@@ -1,15 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {
-  setToken,
-  deleteToken,
-  getToken,
-  initAxiosInterceptors
-} from '../Helpers/auth-helper';
+import { getCurrentUser, initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
 import { SnackbarContext } from '../contexts/SnackbarContext';
@@ -39,23 +34,32 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2)
   }
 }));
-
+var currentUser = '';
+var proyectList = [];
 export default function ProyectOpener() {
   const classes = useStyles();
   const { setVisible, setMessage } = useContext(SnackbarContext);
-  const { currentProyect, setCurrentProyect } = useContext(ProyectContext);
-  const [loadingUser, setLoadingUser] = useState(true);
+  const { setCurrentProyectBy } = useContext(ProyectContext);
 
+  getCurrentUser().then(async response => {
+    currentUser = response.user.id;
+  });
+  Axios.get('/proyects').then(async response => {
+    proyectList = await response.data.filter(data => {
+      return data.owner === currentUser;
+    });
+  });
   const openNewProyect = () => {
     Axios.post('/proyects/')
       .then(response => {
         console.log(response.data.payload);
         let proyect = response.data.payload;
-        setCurrentProyect(proyect);
+        setCurrentProyectBy(proyect);
         navigate('/dashboard/');
       })
       .catch(response => {
         setMessage(JSON.stringify(response.data));
+        setVisible(true);
       });
   };
 
@@ -89,6 +93,9 @@ export default function ProyectOpener() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
+              {proyectList.map(proyect => {
+                return <MenuItem value={10}>{proyect.name}</MenuItem>;
+              })}
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>

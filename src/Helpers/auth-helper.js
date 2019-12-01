@@ -10,7 +10,7 @@ export function getToken() {
 }
 
 export function deleteToken(e) {
-  e.preventDefault();
+  //e.preventDefault();
   localStorage.removeItem(TOKEN_KEY);
   window.location = '/';
 }
