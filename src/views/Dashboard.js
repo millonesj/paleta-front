@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AppToolbar from '../components/appToolbar';
 import ColorSetter from '../components/colorSetter';
 import PaletteList from '../components/paletas';
@@ -10,14 +10,17 @@ import Chat from '../components/Chat';
 import Store from '../contexts/Store';
 import ShareCard from '../components/shareCard';
 import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
+import { ProyectContext } from '../contexts/ProyectContext';
 
 const Dashboard = prop => {
   console.log('>>>> PROP');
   console.log(prop.proyectId);
   const [name, setName] = useState('');
+  const { currentProyect } = useContext(ProyectContext);
   var currentUser = null;
 
   useEffect(() => {
+    setName(currentProyect.name);
     const existUser = async () => {
       currentUser = await getCurrentUser();
       if (!currentUser) {
@@ -26,7 +29,7 @@ const Dashboard = prop => {
       }
       console.log(currentUser);
     };
-  });
+  }, []);
 
   return (
     <div>

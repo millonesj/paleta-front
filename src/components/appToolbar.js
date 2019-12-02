@@ -28,7 +28,7 @@ const AppToolbar = props => {
     c => c.compId === 'toolBar' && c.elementName === 'title and menu'
   ).color;
 
-  const { currentProyect, setCurrentProyect } = useContext(ProyectContext);
+  const { currentProyect, setCurrentProyectBy } = useContext(ProyectContext);
 
   const handleChange = change => {
     setAuth(change);
@@ -50,7 +50,7 @@ const AppToolbar = props => {
       name: props.title,
       __v: currentProyect.__v + 1
     });
-    setCurrentProyect({
+    setCurrentProyectBy({
       ...currentProyect,
       name: props.title,
       __v: currentProyect.__v + 1

@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import { palette } from '@material-ui/system';
 
 const ProyectContext = createContext();
 
@@ -12,7 +13,8 @@ const ProyectContextProvider = ({ children }) => {
         __v: proyect.__v,
         name: proyect.name,
         private: proyect.private,
-        owner: proyect.owner
+        owner: proyect.owner,
+        palettes: proyect.palettes
       };
     });
   };
