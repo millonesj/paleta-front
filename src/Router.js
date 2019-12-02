@@ -11,7 +11,7 @@ const router = () => {
       <SignIn path="/" />
       <SignUp path="signup" show="true" />
       <OpenerProyect path="proyect-opener" />
-      <Dashboard path="dashboard" />
+      <Dashboard path="dashboard/:proyectId" />
     </Router>
   );
 };

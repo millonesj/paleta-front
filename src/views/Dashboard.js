@@ -11,7 +11,9 @@ import Store from '../contexts/Store';
 import ShareCard from '../components/shareCard';
 import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
 
-const Dashboard = () => {
+const Dashboard = prop => {
+  console.log('>>>> PROP');
+  console.log(prop.proyectId);
   const [name, setName] = useState('');
   var currentUser = null;
 

@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { getCurrentUser, initAxiosInterceptors } from '../Helpers/auth-helper';
+import { initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
 import { SnackbarContext } from '../contexts/SnackbarContext';
@@ -34,35 +34,37 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2)
   }
 }));
-var currentUser = '';
+
 export default function ProyectOpener() {
   const classes = useStyles();
   const [proyectList, setProyectList] = useState([]);
+  const [idProyectSelected, setIdProyectSelected] = useState('');
   const { setVisible, setMessage } = useContext(SnackbarContext);
   const { setCurrentProyectBy } = useContext(ProyectContext);
 
   useEffect(() => {
     Axios.get('/proyects').then(response => {
-      let proyectFilters = response.data.filter(data => {
-        return data.owner === currentUser;
-      });
-      setProyectList(proyectFilters);
+      let proyects = response.data.payload;
+      setProyectList(proyects);
     });
   }, []);
 
   const openNewProyect = () => {
     Axios.post('/proyects/')
       .then(response => {
-        console.log(response.data.payload);
         let proyect = response.data.payload;
         setCurrentProyectBy(proyect);
-        navigate('/dashboard/');
+        navigate(`/dashboard/${proyect._id}`);
       })
       .catch(response => {
         setMessage(JSON.stringify(response.data));
         setVisible(true);
       });
   };
+
+  function handleOpenExistingProyect() {
+    navigate(`/dashboard/${idProyectSelected}`);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -88,26 +90,29 @@ export default function ProyectOpener() {
               labelId="open-existing-proyect-label"
               fullWidth
               id="open-existing-proyect"
-              /* value={age}
-          onChange={handleChange} */
+              value={idProyectSelected}
+              onChange={event => {
+                setIdProyectSelected(event.target.value);
+              }}
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
               {proyectList.map((proyect, indice) => {
-                console.log(proyect);
                 return (
-                  <MenuItem value={10} key={indice}>
+                  <MenuItem value={proyect._id} key={indice}>
                     {proyect.name}
                   </MenuItem>
                 );
               })}
             </Select>
             <Button
+              disabled={!idProyectSelected}
               variant="contained"
               color="primary"
               className={classes.margin}
               fullWidth
+              onClick={handleOpenExistingProyect}
             >
               Open
             </Button>
