@@ -3,6 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
 
 const ShareCard = props => {
   const [values, setValues] = useState({
@@ -39,6 +42,19 @@ const ShareCard = props => {
               value={values.localName}
               onChange={handleChange('localName')}
             />
+            <FormGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    /* checked={state.checkedB} */
+                    onChange={handleChange('checkedB')}
+                    value="checkedB"
+                    color="primary"
+                  />
+                }
+                label="Primary"
+              />
+            </FormGroup>
             <Button
               style={{ color: 'white', backgroundColor: 'blue', margin: '4px' }}
               size="small"
@@ -46,7 +62,7 @@ const ShareCard = props => {
                 props.setName(values.localName);
               }}
             >
-              Asignar nombre
+              Update Proyect
             </Button>
           </Paper>
         </Grid>
