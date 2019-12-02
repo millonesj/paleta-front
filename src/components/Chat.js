@@ -65,6 +65,11 @@ export default function AlignItemsList() {
   const [textValue, changeTextValue] = useState('');
   const [listMessages, setListMessages] = useState('');
 
+  const handlerSendMessage = () => {
+    sendChatAction({ from: user, msg: textValue, topic: 'general' });
+    changeTextValue('');
+  };
+
   return (
     <Card className={classes.card}>
       <CardContent className={classes.CardContent}>
@@ -84,15 +89,20 @@ export default function AlignItemsList() {
             value={textValue}
             onChange={e => changeTextValue(e.target.value)}
             className={classes.chatBox}
+            onKeyPress={ev => {
+              console.log(`Pressed keyCode ${ev.key}`);
+              if (ev.key === 'Enter') {
+                // Do code here
+                ev.preventDefault();
+                handlerSendMessage();
+              }
+            }}
           />
           <Button
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={() => {
-              sendChatAction({ from: user, msg: textValue, topic: 'general' });
-              changeTextValue('');
-            }}
+            onClick={handlerSendMessage}
           >
             Send
           </Button>
