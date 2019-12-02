@@ -56,7 +56,8 @@ const ShareCard = props => {
               />
             </FormGroup>
             <Button
-              style={{ color: 'white', backgroundColor: 'blue', margin: '4px' }}
+              color="primary"
+              variant="contained"
               size="small"
               onClick={() => {
                 props.setName(values.localName);
@@ -91,7 +92,8 @@ const ShareCard = props => {
               onChange={handleChange('localRoute')}
             />
             <Button
-              style={{ color: 'white', backgroundColor: 'blue', margin: '4px' }}
+              color="primary"
+              variant="contained"
               size="small"
               onClick={() => {
                 setValues({
