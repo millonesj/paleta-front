@@ -77,7 +77,7 @@ const Dashboard = prop => {
                     backgroundColor: '#e0e0e0'
                   }}
                 >
-                  <ShareCard setName={setName} />
+                  <ShareCard setName={setName} proyectId={prop} />
                 </Paper>
               </Grid>
             </Grid>
