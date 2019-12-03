@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -6,11 +6,11 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
-
+import { ProyectContext } from '../contexts/ProyectContext';
 const ShareCard = props => {
   const [values, setValues] = useState({
     localName: '',
-    localRoute: 'Generar Ruta'
+    localRoute: props.proyectId.location.href
   });
   const handleChange = name => event => {
     setValues({
