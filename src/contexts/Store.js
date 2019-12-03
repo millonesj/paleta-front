@@ -1,5 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
+import { getToken } from '../Helpers/auth-helper';
 
 /*
   {
@@ -23,38 +24,22 @@ const initState = {
   general: [
     { from: 'Aaron', msg: 'Hello' },
     { from: 'Jhon', msg: 'hello' },
-    { from: 'Pool', msg: 'Hi' },
-    { from: 'Moor', msg: 'hello' },
-    { from: 'Aaron', msg: 'Hello' },
-    { from: 'Jhon', msg: 'hello' },
-    { from: 'Pool', msg: 'Hi' },
-    { from: 'Moor', msg: 'hello' },
-    { from: 'Aaron', msg: 'Hello' },
-    { from: 'Jhon', msg: 'hello' },
-    { from: 'Pool', msg: 'Hi' },
-    { from: 'Moor', msg: 'hello' },
-    { from: 'Aaron', msg: 'Hello' },
-    { from: 'Jhon', msg: 'hello' },
-    { from: 'Pool', msg: 'Hi' },
-    { from: 'Moor', msg: 'hello' }
+    { from: 'Pool', msg: 'Hi' }
   ]
 };
 
 export const CTX = React.createContext();
 
+//state = all messages, action = a message
 const reducer = (state, action) => {
-  console.log('>> STATE');
-  console.log(state);
-  console.log('>>> ACTION>');
-  console.log(action);
-
   const { from, msg, topic } = action.payload;
   switch (action.type) {
     case 'RECEIVE_MESSAGE':
-      return {
+      const allMessages = {
         ...state,
         [topic]: [...state[topic], { from, msg }]
       };
+      return allMessages;
     default:
       return false;
   }
@@ -71,7 +56,11 @@ const Storage = props => {
   const user = 'Jhonny' + Math.random(100).toFixed(2);
 
   if (!socket) {
-    socket = io(':3001');
+    socket = io(':3001', {
+      query: {
+        token: getToken()
+      }
+    });
     socket.on('chat message', function(msg) {
       dispatch({ type: 'RECEIVE_MESSAGE', payload: msg });
     });
