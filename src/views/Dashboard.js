@@ -13,8 +13,8 @@ import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
 import { ProyectContext } from '../contexts/ProyectContext';
 
 const Dashboard = prop => {
-  console.log('>>>> PROP');
-  console.log(prop.proyectId);
+  //console.log('>>>> PROP');
+  //console.log(prop.proyectId);
   const [name, setName] = useState('');
   const { currentProyect } = useContext(ProyectContext);
   var currentUser = null;

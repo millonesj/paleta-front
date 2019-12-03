@@ -39,7 +39,6 @@ export default function ProyectOpener() {
   const classes = useStyles();
   const [proyectList, setProyectList] = useState([]);
   const [idProyectSelected, setIdProyectSelected] = useState('');
-  const [indexProyect, setIndexProyect] = useState(0);
   const { setVisible, setMessage } = useContext(SnackbarContext);
   const { setCurrentProyectBy } = useContext(ProyectContext);
 
@@ -97,8 +96,6 @@ export default function ProyectOpener() {
               id="open-existing-proyect"
               value={idProyectSelected}
               onChange={event => {
-                setIndexProyect(event.target.key);
-                console.log(event.target);
                 setIdProyectSelected(event.target.value);
               }}
             >
