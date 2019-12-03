@@ -55,7 +55,7 @@ export default function FormDialog(prop) {
       Axios.post('/users/register', { name, email, password })
         .then(response => {
           setToken(response.data.token);
-          navigate('/dashboard/');
+          navigate('/proyect-opener/');
           setMessage('Registrando');
           setVisible(true);
         })
