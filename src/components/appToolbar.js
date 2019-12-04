@@ -55,9 +55,8 @@ const AppToolbar = props => {
       name: props.title,
       __v: currentProyect.__v + 1
     });
-    console.log({ ...currentProyect, name: props.title });
-    console.log(props.title);
-    console.log(color);
+    setMessage('Guardando Nombre');
+    setVisible(true);
     console.log('guardando');
   };
   return (
