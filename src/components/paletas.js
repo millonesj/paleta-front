@@ -110,15 +110,16 @@ const PaletteList = () => {
   const [palettes, setPalettes] = useState([]);
   const [nameValue, changeNameValue] = useState('');
   const [idPaletteSelected, setIdPaletteSelected] = useState('default');
+
   useEffect(() => {
-    Axios.get(`/proyects/${currentProyect._id}`).then(response => {
-      const currentPalettes = response.data.payload.palettes;
-      console.log(currentPalettes);
-      setPalettes(currentPalettes);
-      console.log('ya se revisaron las paletas');
-      console.log(palettes);
-    });
-  }, []);
+    if (currentProyect._id != null) {
+      Axios.get(`/proyects/${currentProyect._id}`).then(response => {
+        const currentPalettes = response.data.payload.palettes;
+        console.log(currentPalettes);
+        setPalettes(currentPalettes);
+      });
+    }
+  }, [currentProyect]);
 
   const { color } = useContext(ColorContext);
   const classes = useStyles();
