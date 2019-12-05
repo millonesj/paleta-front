@@ -2,7 +2,7 @@ import 'rc-color-picker/assets/index.css';
 import React, { useState, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Panel as ColorPickerPanel } from 'rc-color-picker';
-import ColorContext from '../colorContext/colorContext';
+import { ColorContext } from '../contexts/colorContext';
 import ColorPicker from 'rc-color-picker';
 import Box from '@material-ui/core/Box';
 

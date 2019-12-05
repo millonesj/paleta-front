@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import AppToolbar from '../components/AppToolbar';
 import ColorSetter from '../components/ColorSetter';
 import PaletteList from '../components/PaletteList';
-import ColorProvider from '../colorContext/colorProvider';
+import { ColorProvider } from '../contexts/colorContext';
 import { navigate } from '@reach/router';
 import Chat from '../components/Chat';
 import Store from '../contexts/Store';

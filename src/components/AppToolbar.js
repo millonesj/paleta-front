@@ -7,7 +7,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SaveIcon from '@material-ui/icons/Save';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import ColorContext from '../colorContext/colorContext';
+import { ColorContext } from '../contexts/colorContext';
 import { SnackbarContext } from '../contexts/SnackbarContext';
 import { deleteToken, initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';

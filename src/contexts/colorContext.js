@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import ColorContext from './colorContext';
+
+const ColorContext = React.createContext({});
 
 const ColorProvider = ({ children }) => {
   const [color, setColor] = useState([
@@ -66,4 +67,4 @@ const ColorProvider = ({ children }) => {
   );
 };
 
-export default ColorProvider;
+export { ColorContext, ColorProvider };

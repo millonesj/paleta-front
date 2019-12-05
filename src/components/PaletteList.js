@@ -10,7 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import temporalDB from '../utils/temporalDB';
-import ColorContext from '../colorContext/colorContext';
+import { ColorContext } from '../contexts/colorContext';
 import { deleteToken, initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';
 import { ProyectContext } from '../contexts/ProyectContext';
