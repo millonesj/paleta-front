@@ -1,14 +1,14 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import React, { useState, useEffect, useContext } from 'react';
-import AppToolbar from '../components/appToolbar';
-import ColorSetter from '../components/colorSetter';
-import PaletteList from '../components/paletas';
+import AppToolbar from '../components/AppToolbar';
+import ColorSetter from '../components/ColorSetter';
+import PaletteList from '../components/PaletteList';
 import ColorProvider from '../colorContext/colorProvider';
 import { navigate } from '@reach/router';
 import Chat from '../components/Chat';
 import Store from '../contexts/Store';
-import ShareCard from '../components/shareCard';
+import ShareCard from '../components/ShareCard';
 import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
 import { ProyectContext } from '../contexts/ProyectContext';
 
