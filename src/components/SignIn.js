@@ -21,6 +21,7 @@ import {
 import Axios from 'axios';
 import { navigate } from '@reach/router';
 import { SnackbarContext } from '../contexts/SnackbarContext';
+import { getMessageResponse } from '../Helpers/utils';
 
 initAxiosInterceptors();
 
@@ -83,13 +84,19 @@ export default function SignIn() {
           navigate('/proyect-opener/');
         })
         .catch(error => {
-          let message = error.response.data.message;
+          const message = getMessageResponse(error);
           setMessage(message);
           setVisible(true);
         });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleLogin = () => {
+    login(email, password);
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -128,17 +135,19 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onKeyPress={event => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                handleLogin();
+              }
+            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            onClick={() => {
-              login(email, password);
-              setEmail('');
-              setPassword('');
-            }}
+            onClick={handleLogin}
             fullWidth
             variant="contained"
             color="primary"

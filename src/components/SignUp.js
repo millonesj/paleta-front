@@ -13,7 +13,7 @@ import { setToken, deleteToken } from '../Helpers/auth-helper';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
 import { SnackbarContext } from '../contexts/SnackbarContext';
-
+import { getMessageResponse } from '../Helpers/utils';
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -60,14 +60,22 @@ export default function FormDialog(prop) {
           setVisible(true);
         })
         .catch(response => {
-          setMessage(response.data.message);
+          const message = getMessageResponse(response);
+          setMessage(message);
           setVisible(true);
-          setMessageResponse(response.data.message);
+          setMessageResponse(message);
         });
     } catch (error) {
       setMessageResponse(error);
       console.log(error);
     }
+  };
+
+  const handleSignUp = () => {
+    getToken(name, email, password);
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
   const classes = useStyles();
@@ -119,18 +127,18 @@ export default function FormDialog(prop) {
               value={password}
               onChange={e => setPassword(e.target.value)}
               autoComplete="current-password"
+              onKeyPress={ev => {
+                if (ev.key === 'Enter') {
+                  handleSignUp();
+                }
+              }}
             />
             <Button
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={() => {
-                getToken(name, email, password);
-                setName('');
-                setEmail('');
-                setPassword('');
-              }}
+              onClick={handleSignUp}
             >
               Sign Up
             </Button>
