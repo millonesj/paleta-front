@@ -5,6 +5,7 @@ import { Panel as ColorPickerPanel } from 'rc-color-picker';
 import { ColorContext } from '../contexts/colorContext';
 import ColorPicker from 'rc-color-picker';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 var colorList = [
   {
@@ -49,11 +50,14 @@ var colorList = [
   }
 ];
 const BtnColor = props => {
+  const { setColorBy } = useContext(ColorContext);
   const [btnColor, setBtnColor] = useState('grey');
+  const [textColor, setTextColor] = useState('black');
   let index = 0;
   return (
-    <button
-      style={{ backgroundColor: btnColor }}
+    <Button
+      style={{ backgroundColor: btnColor, margin: '4px', color: textColor }}
+      size="small"
       onClick={() => {
         index = colorList.findIndex(c => {
           return (
@@ -66,10 +70,20 @@ const BtnColor = props => {
           color: props.pickedColor
         };
         setBtnColor(props.pickedColor);
+        if (
+          parseInt(props.pickedColor.toString().substring(1, 3), 16) > 128 ||
+          parseInt(props.pickedColor.toString().substring(3, 5), 16) > 128 ||
+          parseInt(props.pickedColor.toString().substring(5, 7), 16) > 128
+        ) {
+          setTextColor('black');
+        } else {
+          setTextColor('white');
+        }
+        setColorBy(colorList);
       }}
     >
       {props.elementName}: {btnColor}
-    </button>
+    </Button>
   );
 };
 const ColorSetter = () => {
