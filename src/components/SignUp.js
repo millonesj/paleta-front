@@ -35,20 +35,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function FormDialog(prop) {
-  const [open, setOpen] = useState(prop.show);
   const [name, setName] = useState('');
   const { setSnackMessage } = useContext(SnackbarContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [messageResponse, setMessageResponse] = useState('');
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const getToken = async (name, email, password) => {
     try {
