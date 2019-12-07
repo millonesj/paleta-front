@@ -9,76 +9,86 @@ import Button from '@material-ui/core/Button';
 
 var colorList = [
   {
-    color: 'blue',
+    color: '#0000FF',
     compId: 'toolBar',
     elementName: 'background'
   },
   {
-    color: 'white',
+    color: '#FFFFFF',
     compId: 'toolBar',
     elementName: 'title and menu'
   },
   {
-    color: 'grey',
+    color: '#AAAAAA',
     compId: 'paletteList',
     elementName: 'background'
   },
   {
-    color: 'white',
+    color: '#FFFFFF',
     compId: 'paletteList',
     elementName: 'title'
   },
   {
-    color: 'white',
+    color: '#FFFFFF',
     compId: 'paletteList',
     elementName: 'paletteTitleTxt'
   },
   {
-    color: 'blue',
+    color: '#0000FF',
     compId: 'paletteList',
     elementName: 'paletteTitleBg'
   },
   {
-    color: 'white',
+    color: '#FFFFFF',
     compId: 'paletteList',
     elementName: 'paletteSubTitleTxt'
   },
   {
-    color: 'grey',
+    color: '#AAAAAA',
     compId: 'paletteList',
     elementName: 'paletteSubTitleBg'
   }
 ];
+const getIndex = props => {
+  return colorList.findIndex(c => {
+    return c.compId === props.compId && c.elementName === props.elementName;
+  });
+};
+const getTextColor = bgColor => {
+  const R = parseInt(bgColor.toString().substring(1, 3), 16);
+  const G = parseInt(bgColor.toString().substring(3, 5), 16);
+  const B = parseInt(bgColor.toString().substring(5, 7), 16);
+  if ((R > 100 && G > 100) || (R > 100 && B > 100) || (B > 100 && G > 100)) {
+    return 'black';
+  } else {
+    return 'white';
+  }
+};
 const BtnColor = props => {
+  let index = getIndex(props);
   const { setColorBy } = useContext(ColorContext);
-  const [btnColor, setBtnColor] = useState('grey');
-  const [textColor, setTextColor] = useState('black');
-  let index = 0;
+  const [btnColor, setBtnColor] = useState(colorList[index].color);
+  const [textColor, setTextColor] = useState(
+    getTextColor(colorList[index].color)
+  );
   return (
     <Button
-      style={{ backgroundColor: btnColor, margin: '4px', color: textColor }}
+      style={{
+        backgroundColor: btnColor,
+        margin: '2px',
+        color: textColor,
+        padding: '2px'
+      }}
       size="small"
       onClick={() => {
-        index = colorList.findIndex(c => {
-          return (
-            c.compId === props.compId && c.elementName === props.elementName
-          );
-        });
+        index = getIndex(props);
         colorList[index] = {
           compId: props.compId,
           elementName: props.elementName,
           color: props.pickedColor
         };
         setBtnColor(props.pickedColor);
-        if (
-          parseInt(props.pickedColor.toString().substring(1, 3), 16) > 128 ||
-          parseInt(props.pickedColor.toString().substring(3, 5), 16) > 128 ||
-          parseInt(props.pickedColor.toString().substring(5, 7), 16) > 128
-        ) {
-          setTextColor('black');
-        } else {
-          setTextColor('white');
-        }
+        setTextColor(getTextColor(props.pickedColor));
         setColorBy(colorList);
       }}
     >

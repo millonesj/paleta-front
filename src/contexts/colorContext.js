@@ -5,42 +5,42 @@ const ColorContext = React.createContext({});
 const ColorProvider = ({ children }) => {
   const [color, setColor] = useState([
     {
-      color: '#155fa0',
+      color: '#0000FF',
       compId: 'toolBar',
       elementName: 'background'
     },
     {
-      color: 'white',
+      color: '#FFFFFF',
       compId: 'toolBar',
       elementName: 'title and menu'
     },
     {
-      color: '#b2102f',
+      color: '#AAAAAA',
       compId: 'paletteList',
       elementName: 'background'
     },
     {
-      color: 'white',
+      color: '#FFFFFF',
       compId: 'paletteList',
       elementName: 'title'
     },
     {
-      color: 'white',
+      color: '#FFFFFF',
       compId: 'paletteList',
       elementName: 'paletteTitleTxt'
     },
     {
-      color: '#ff4569',
+      color: '#0000FF',
       compId: 'paletteList',
       elementName: 'paletteTitleBg'
     },
     {
-      color: 'white',
+      color: '#FFFFFF',
       compId: 'paletteList',
       elementName: 'paletteSubTitleTxt'
     },
     {
-      color: '#546e7a',
+      color: '#AAAAAA',
       compId: 'paletteList',
       elementName: 'paletteSubTitleBg'
     }
