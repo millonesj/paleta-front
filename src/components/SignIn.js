@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { setVisible, setMessage } = useContext(SnackbarContext);
+  const { setSnackMessage } = useContext(SnackbarContext);
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
   const [email, setEmail] = useState('');
@@ -75,18 +75,15 @@ export default function SignIn() {
 
   const login = async (email, password) => {
     try {
-      setMessage('Iniciando sesión');
+      setSnackMessage('Iniciando sesión...');
       Axios.post('/users/login', { email, password })
         .then(response => {
-          setMessage('Iniciando sesión');
-          setVisible(true);
           setToken(response.data.token);
           navigate('/proyect-opener/');
         })
         .catch(error => {
           const message = getMessageResponse(error);
-          setMessage(message);
-          setVisible(true);
+          setSnackMessage(message);
         });
     } catch (error) {
       console.log(error);

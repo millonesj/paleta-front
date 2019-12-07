@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,20 +13,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleSnackbar(prop) {
   const classes = useStyles();
-  //const [open, setOpen] = React.useState(false);
-  const { visible, message, setVisible } = useContext(SnackbarContext);
+  const [visible, setVisible] = useState(false);
+  const { snackMessage, setSnackMessage } = useContext(SnackbarContext);
 
-  /*const handleClick = () => {
-    setOpen(true);
-  };*/
+  useEffect(() => {
+    console.log(snackMessage);
+    if (snackMessage !== '') {
+      setVisible(true);
+    }
+  }, [snackMessage]);
 
   const handleClose = (event, reason) => {
-    /*if (reason === "clickaway") {
-      return;
-    }*/
-
     setVisible(false);
-    console.log('cerrando snackbar');
+    setSnackMessage('');
   };
 
   return (
@@ -34,7 +33,7 @@ export default function SimpleSnackbar(prop) {
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left'
+          horizontal: 'right'
         }}
         open={visible}
         autoHideDuration={2000}
@@ -42,7 +41,7 @@ export default function SimpleSnackbar(prop) {
         ContentProps={{
           'aria-describedby': 'message-id'
         }}
-        message={<span id="message-id">{message}</span>}
+        message={<span id="message-id">{snackMessage}</span>}
         action={[
           <IconButton
             key="close"
