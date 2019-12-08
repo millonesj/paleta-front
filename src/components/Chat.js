@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,8 +11,10 @@ import Chip from '@material-ui/core/Chip';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { changeTextValue, CTX } from '../contexts/Store';
+import { changeTextValue, ChatContext } from '../contexts/ChatContext';
 import Box from '@material-ui/core/Box';
+import { UserContext } from '../contexts/UserContext';
+import { ProyectContext } from '../contexts/ProyectContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,13 +62,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function AlignItemsList() {
   const classes = useStyles();
-  const { allChats, sendChatAction, user } = React.useContext(CTX);
-  const topics = Object.keys(allChats);
+  const { allChats, sendChatAction, user } = useContext(ChatContext);
+  const { currentUser } = useContext(UserContext);
+  const { currentProyect } = useContext(ProyectContext);
+  const proyects = Object.keys(allChats);
   const [textValue, changeTextValue] = useState('');
   const [listMessages, setListMessages] = useState('');
 
   const handlerSendMessage = () => {
-    sendChatAction({ from: user, msg: textValue, topic: 'general' });
+    sendChatAction({
+      from: currentUser.email,
+      msg: textValue,
+      proyectId: currentProyect._id
+    });
     changeTextValue('');
   };
 
@@ -75,7 +83,7 @@ export default function AlignItemsList() {
       <CardContent className={classes.CardContent}>
         <Box overflow="auto">
           <List>
-            {allChats['general'].map((chat, i) => (
+            {allChats[currentProyect._id].map((chat, i) => (
               <div key={i}>
                 <MessageLeft message={chat.msg} />
               </div>

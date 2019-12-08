@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useReducer } from 'react';
 import io from 'socket.io-client';
 import { getToken } from '../Helpers/auth-helper';
 
@@ -21,27 +21,24 @@ import { getToken } from '../Helpers/auth-helper';
 */
 
 const initState = {
-  general: [
-    { from: 'Aaron', msg: 'Hello' },
-    { from: 'Jhon', msg: 'hello' },
-    { from: 'Pool', msg: 'Hi' }
-  ]
+  '5de70c1a5607dd49f83060fa': [{ from: 'Aaron', msg: 'Hello' }]
 };
 
-export const CTX = React.createContext();
+const ChatContext = createContext();
 
-//state = all messages, action = a message
+//@state = all messages
+//@action = a message
 const reducer = (state, action) => {
-  const { from, msg, topic } = action.payload;
+  const { from, msg, proyectId } = action.payload;
   switch (action.type) {
     case 'RECEIVE_MESSAGE':
       const allMessages = {
         ...state,
-        [topic]: [...state[topic], { from, msg }]
+        [proyectId]: [...state[proyectId], { from, msg }]
       };
       return allMessages;
     default:
-      return false;
+      return [];
   }
 };
 
@@ -51,8 +48,8 @@ const sendChatAction = value => {
   socket.emit('chat message', value);
 };
 
-const Storage = props => {
-  const [allChats, dispatch] = React.useReducer(reducer, initState);
+const ChatContextProvider = props => {
+  const [allChats, dispatch] = useReducer(reducer, initState);
   const user = 'Jhonny' + Math.random(100).toFixed(2);
 
   if (!socket) {
@@ -67,10 +64,10 @@ const Storage = props => {
   }
 
   return (
-    <CTX.Provider value={{ allChats, sendChatAction, user }}>
+    <ChatContext.Provider value={{ allChats, sendChatAction, user }}>
       {props.children}
-    </CTX.Provider>
+    </ChatContext.Provider>
   );
 };
 
-export default Storage;
+export { ChatContext, ChatContextProvider };

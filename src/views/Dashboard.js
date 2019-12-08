@@ -7,7 +7,7 @@ import PaletteList from '../components/PaletteList';
 import { ColorProvider } from '../contexts/colorContext';
 import { navigate } from '@reach/router';
 import Chat from '../components/Chat';
-import Store from '../contexts/Store';
+import { ChatContextProvider } from '../contexts/ChatContext';
 import ShareCard from '../components/ShareCard';
 import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
 import { ProyectContext } from '../contexts/ProyectContext';
@@ -75,9 +75,9 @@ const Dashboard = prop => {
                 backgroundColor: '#e0e0e0'
               }}
             >
-              <Store>
+              <ChatContextProvider>
                 <Chat></Chat>
-              </Store>
+              </ChatContextProvider>
             </Paper>
           </Grid>
           <Grid item xs={6}>
