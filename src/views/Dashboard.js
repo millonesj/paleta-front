@@ -12,14 +12,15 @@ import ShareCard from '../components/ShareCard';
 import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
 import { ProyectContext } from '../contexts/ProyectContext';
 import { initAxiosInterceptors } from '../Helpers/auth-helper';
+import { UserContext } from '../contexts/UserContext';
 import Axios from 'axios';
 
 initAxiosInterceptors();
 
 const Dashboard = prop => {
   const [name, setName] = useState('');
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const { currentProyect, setCurrentProyectBy } = useContext(ProyectContext);
-  var currentUser = null;
 
   const getUserProyects = async () => {
     Axios.get('/proyects').then(response => {
@@ -36,21 +37,24 @@ const Dashboard = prop => {
       }
     });
   };
-  const existUser = async () => {
-    currentUser = await getCurrentUser();
-    if (!currentUser) {
-      console.log('no hay usuario');
-      navigate('/');
-    }
-    if (currentProyect._id == null) {
-      getUserProyects();
-    } else {
-      console.log('Proyecto asignado');
-    }
-  };
 
   useEffect(() => {
     setName(currentProyect.name);
+    const existUser = async () => {
+      const currentUser = await getCurrentUser();
+      if (!currentUser) {
+        console.log('no hay usuario');
+        navigate('/');
+      } else {
+        setCurrentUser(currentUser.user);
+      }
+      if (currentProyect._id == null) {
+        getUserProyects();
+      } else {
+        console.log('Proyecto asignado');
+      }
+    };
+
     existUser();
   }, [currentProyect]);
 
