@@ -1,0 +1,44 @@
+[
+  {
+    "compId": "toolBar",
+    "compElements": [
+      {
+        "elementName": "background",
+        "color": "red"
+      },
+      {
+        "elementName": "title and menu",
+        "color": "white"
+      }
+    ]
+  },
+  {
+    "compId": "paletteList",
+    "compElements": [
+      {
+        "elementName": "background",
+        "color": "blue"
+      },
+      {
+        "elementName": "title",
+        "color": "white"
+      },
+      {
+        "elementName": "paletteTitleTxt",
+        "color": "white"
+      },
+      {
+        "elementName": "paletteTitleBg",
+        "color": "red"
+      },
+      {
+        "elementName": "paletteSubTitleTxt",
+        "color": "white"
+      },
+      {
+        "elementName": "paletteSubTitleBg",
+        "color": "green"
+      }
+    ]
+  }
+]

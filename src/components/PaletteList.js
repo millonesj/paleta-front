@@ -9,9 +9,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import temporalDB from '../utils/temporalDB';
-import { ColorContext } from '../contexts/colorContext';
-import { deleteToken, initAxiosInterceptors } from '../Helpers/auth-helper';
+import paletteListModel from '../utils/paletteListModel';
+import { ColorContext } from '../contexts/ColorContext';
+import { initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';
 import { ProyectContext } from '../contexts/ProyectContext';
 import Select from '@material-ui/core/Select';
@@ -48,10 +48,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   }
 }));
-
-const handlerSendMessage = () => {
-  console.log('guardando paleta');
-};
 
 const PaletteItem = props => {
   const { color } = useContext(ColorContext);
@@ -106,22 +102,22 @@ const PaletteItem = props => {
 };
 
 const PaletteList = () => {
+  const { color } = useContext(ColorContext);
   const { currentProyect } = useContext(ProyectContext);
   const [palettes, setPalettes] = useState([]);
   const [nameValue, changeNameValue] = useState('');
   const [idPaletteSelected, setIdPaletteSelected] = useState('default');
+  const [paletteSelectedName, setPaletteSelectedName] = useState('default');
 
   useEffect(() => {
     if (currentProyect._id != null) {
       Axios.get(`/proyects/${currentProyect._id}`).then(response => {
-        const currentPalettes = response.data.payload.palettes;
-        console.log(currentPalettes);
+        const currentPalettes = response.data.payload;
         setPalettes(currentPalettes);
       });
     }
   }, [currentProyect]);
 
-  const { color } = useContext(ColorContext);
   const classes = useStyles();
   let pBackground = color.find(c => {
     return c.compId === 'paletteList' && c.elementName === 'background';
@@ -129,6 +125,36 @@ const PaletteList = () => {
   let pTitle = color.find(c => {
     return c.compId === 'paletteList' && c.elementName === 'title';
   }).color;
+
+  const getPaletteIndex = id => {
+    const index = palettes.findIndex(palette => {
+      return palette._id === id;
+    });
+    return index;
+  };
+  const SelectedName = id => {
+    const index = getPaletteIndex(id);
+    setPaletteSelectedName(palettes[index].name);
+  };
+  const changePaletteName = () => {
+    Axios.put(`/palettes/${idPaletteSelected}`, {
+      name: nameValue
+    });
+    let palettesAux = palettes;
+    const index = getPaletteIndex(idPaletteSelected);
+    palettesAux[index].name = nameValue;
+    console.log(palettesAux);
+    setPalettes(palettesAux);
+  };
+
+  const addSaveAction = () => {
+    if (paletteSelectedName === 'default') {
+      console.log('añadiendo paleta');
+    } else {
+      changePaletteName();
+    }
+  };
+
   return (
     <Card className={classes.card}>
       <CardContent className={classes.CardContent}>
@@ -153,18 +179,19 @@ const PaletteList = () => {
             value={idPaletteSelected}
             onChange={event => {
               console.log(event.target.value);
+              SelectedName(event.target.value);
               setIdPaletteSelected(event.target.value);
             }}
           >
             {palettes.map(palette => {
               return (
-                <MenuItem value={palette} key={palette}>
-                  {palette}
+                <MenuItem value={palette._id} key={palette._id}>
+                  {palette.name}
                 </MenuItem>
               );
             })}
           </Select>
-          {temporalDB[2].map(component => {
+          {paletteListModel.map(component => {
             return <div key={component.compId}>{PaletteItem(component)}</div>;
           })}
         </List>
@@ -175,11 +202,10 @@ const PaletteList = () => {
             onChange={e => changeNameValue(e.target.value)}
             className={classes.nameBox}
             onKeyPress={ev => {
-              console.log(`Pressed keyCode ${ev.key}`);
               if (ev.key === 'Enter') {
                 // Do code here
                 ev.preventDefault();
-                handlerSendMessage();
+                addSaveAction();
               }
             }}
           />
@@ -187,9 +213,11 @@ const PaletteList = () => {
             variant="contained"
             color="primary"
             className={classes.actionBox}
-            onClick={handlerSendMessage}
+            onClick={() => {
+              addSaveAction();
+            }}
           >
-            {idPaletteSelected == 'default' ? 'Add' : 'Save'}
+            {paletteSelectedName === 'default' ? 'Add' : 'Save'}
           </Button>
         </div>
       </CardContent>
