@@ -1,19 +1,23 @@
+import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import React, { useState, useEffect, useContext } from 'react';
+import { navigate } from '@reach/router';
+import Axios from 'axios';
 import AppToolbar from '../components/AppToolbar';
 import ColorSetter from '../components/ColorSetter';
 import PaletteList from '../components/PaletteList';
-import { ColorProvider } from '../contexts/colorContext';
-import { navigate } from '@reach/router';
 import Chat from '../components/Chat';
-import { ChatContextProvider } from '../contexts/ChatContext';
 import ShareCard from '../components/ShareCard';
-import { getCurrentUser, deleteToken } from '../Helpers/auth-helper';
+import {
+  getCurrentUser,
+  deleteToken,
+  initAxiosInterceptors
+} from '../Helpers/auth-helper';
+
+import { ColorProvider } from '../contexts/colorContext';
+import { ChatContextProvider } from '../contexts/ChatContext';
 import { ProyectContext } from '../contexts/ProyectContext';
-import { initAxiosInterceptors } from '../Helpers/auth-helper';
 import { UserContext } from '../contexts/UserContext';
-import Axios from 'axios';
 
 initAxiosInterceptors();
 
@@ -23,11 +27,8 @@ const Dashboard = prop => {
   const { currentProyect, setCurrentProyectBy } = useContext(ProyectContext);
 
   const getUserProyects = async () => {
-    Axios.get('/proyects').then(response => {
-      const proyects = response.data.payload;
-      const proyect = proyects.find(proyect => {
-        return proyect._id === prop.proyectId;
-      });
+    Axios.get(`/proyects/${prop.proyectId}`).then(response => {
+      const proyect = response.data.payload;
       if (proyect == null) {
         console.log('Proyecto inexistente');
         navigate('/proyect-opener');
@@ -39,31 +40,33 @@ const Dashboard = prop => {
   };
 
   useEffect(() => {
-    setName(currentProyect.name);
-    const existUser = async () => {
-      const currentUser = await getCurrentUser();
-      if (!currentUser) {
-        console.log('no hay usuario');
-        navigate('/');
-      } else {
-        setCurrentUser(currentUser.user);
-      }
-      if (currentProyect._id == null) {
-        getUserProyects();
-      } else {
-        console.log('Proyecto asignado');
+    const existUserCurrent = async () => {
+      if (currentUser.name === '') {
+        const user = await getCurrentUser();
+        if (user) {
+          setCurrentUser(user);
+        } else {
+          navigate('/');
+          console.log('no hay usuario');
+        }
       }
     };
-
-    existUser();
-  }, [currentProyect]);
+    existUserCurrent().then(() => {
+      if (currentProyect._id === '') {
+        getUserProyects();
+      } else {
+        setName(currentProyect.name);
+        console.log('Proyecto asignado');
+      }
+    });
+  }, [currentProyect, setCurrentUser, currentUser]);
 
   return (
     <div>
       <ColorProvider>
         <Grid container>
           <Grid item xs={12} style={{ height: '50px' }}>
-            <AppToolbar title={name} />
+            <AppToolbar title={currentProyect.name} />
           </Grid>
           <Grid item xs={3}>
             <Paper
