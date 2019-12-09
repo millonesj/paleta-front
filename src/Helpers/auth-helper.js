@@ -19,7 +19,12 @@ export async function getCurrentUser() {
   if (!getToken()) return false;
   try {
     let response = await Axios.get('/users/whoami');
-    return response.data;
+    if (response.data) {
+      if (response.data.user) {
+        return response.data.user;
+      }
+    }
+    return false;
   } catch (error) {
     return false;
   }

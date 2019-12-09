@@ -62,10 +62,12 @@ export default function SignIn() {
       }
 
       try {
-        const { data } = await Axios.get('/users/whoami');
-        setCurrentUser(data.user);
+        const user = await Axios.get('/users/whoami');
         setLoadingUser(false);
-        navigate('/dashboard/');
+        if (user) {
+          setCurrentUser(user);
+          navigate('/proyect-opener/');
+        }
       } catch (error) {
         console.log(error);
       }
