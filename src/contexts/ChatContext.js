@@ -1,27 +1,11 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import io from 'socket.io-client';
 import { getToken } from '../Helpers/auth-helper';
+import { ProyectContext } from '../contexts/ProyectContext';
 
-/*
-  {
-    from: 'user
-    msg: 'hi'
-    topic: 'general'
-  }
-
-  state {
-    topic1: [
-      {msg}, {msg}, {msg}
-    ]
-    general: [
-      {msg}, {msg}, {msg}, {newmsg}
-    ]
-  }
-
-*/
-
+// proyect:[{msg}, {msg}, ...]
 const initState = {
-  '5de70c1a5607dd49f83060fa': [{ from: 'Aaron', msg: 'Hello' }]
+  '': []
 };
 
 const ChatContext = createContext();
@@ -30,6 +14,10 @@ const ChatContext = createContext();
 //@action = a message
 const reducer = (state, action) => {
   const { from, msg, proyectId } = action.payload;
+  console.log(state[proyectId]);
+  if (!state[proyectId]) {
+    state[proyectId] = [];
+  }
   switch (action.type) {
     case 'RECEIVE_MESSAGE':
       const allMessages = {
@@ -49,6 +37,7 @@ const sendChatAction = value => {
 };
 
 const ChatContextProvider = props => {
+  const [proyectChat, setProyectChat] = useState({});
   const [allChats, dispatch] = useReducer(reducer, initState);
   const user = 'Jhonny' + Math.random(100).toFixed(2);
 
@@ -64,7 +53,9 @@ const ChatContextProvider = props => {
   }
 
   return (
-    <ChatContext.Provider value={{ allChats, sendChatAction, user }}>
+    <ChatContext.Provider
+      value={{ setProyectChat, allChats, sendChatAction, user }}
+    >
       {props.children}
     </ChatContext.Provider>
   );

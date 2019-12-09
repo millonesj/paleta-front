@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -62,12 +62,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function AlignItemsList() {
   const classes = useStyles();
-  const { allChats, sendChatAction, user } = useContext(ChatContext);
+  const { setProyectChat, allChats, sendChatAction, user } = useContext(
+    ChatContext
+  );
   const { currentUser } = useContext(UserContext);
   const { currentProyect } = useContext(ProyectContext);
   const proyects = Object.keys(allChats);
   const [textValue, changeTextValue] = useState('');
   const [listMessages, setListMessages] = useState('');
+  const [currentChats, setCurrentChats] = useState([]);
 
   const handlerSendMessage = () => {
     sendChatAction({
@@ -78,12 +81,20 @@ export default function AlignItemsList() {
     changeTextValue('');
   };
 
+  useEffect(() => {
+    if (allChats[currentProyect._id] === undefined) {
+      setCurrentChats([]);
+    } else {
+      setCurrentChats(allChats[currentProyect._id]);
+    }
+  }, [allChats, currentProyect]);
+
   return (
     <Card className={classes.card}>
       <CardContent className={classes.CardContent}>
         <Box overflow="auto">
           <List>
-            {allChats[currentProyect._id].map((chat, i) => (
+            {currentChats.map((chat, i) => (
               <div key={i}>
                 <MessageLeft message={chat.msg} />
               </div>
