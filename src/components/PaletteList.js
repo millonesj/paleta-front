@@ -112,7 +112,7 @@ const PaletteList = () => {
   const [idPaletteSelected, setIdPaletteSelected] = useState('default');
 
   useEffect(() => {
-    if (currentProyect._id != null) {
+    if (currentProyect._id !== '') {
       Axios.get(`/proyects/${currentProyect._id}`).then(response => {
         const currentPalettes = response.data.payload.palettes;
         console.log(currentPalettes);
@@ -189,7 +189,7 @@ const PaletteList = () => {
             className={classes.actionBox}
             onClick={handlerSendMessage}
           >
-            {idPaletteSelected == 'default' ? 'Add' : 'Save'}
+            {idPaletteSelected === 'default' ? 'Add' : 'Save'}
           </Button>
         </div>
       </CardContent>

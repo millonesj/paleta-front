@@ -4,14 +4,13 @@ import { palette } from '@material-ui/system';
 const ProyectContext = createContext();
 
 const ProyectContextProvider = ({ children }) => {
-  const [currentProyect, setCurrentProyect] = useState({});
-  /* const [currentProyect, setCurrentProyect] = useState({
+  const [currentProyect, setCurrentProyect] = useState({
     _id: '',
     name: '',
     private: '',
     owner: '',
     palettes: []
-  }); */
+  });
   const setCurrentProyectBy = proyect => {
     setCurrentProyect(state => {
       return {
