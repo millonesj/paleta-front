@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import { ProyectContext } from '../contexts/ProyectContext';
+import { getMessageResponse } from '../Helpers/utils';
 
 initAxiosInterceptors();
 const useStyles = makeStyles(theme => ({
@@ -39,7 +40,7 @@ export default function ProyectOpener() {
   const classes = useStyles();
   const [proyectList, setProyectList] = useState([]);
   const [idProyectSelected, setIdProyectSelected] = useState('');
-  const { setVisible, setMessage } = useContext(SnackbarContext);
+  const { setSnackMessage } = useContext(SnackbarContext);
   const { setCurrentProyectBy } = useContext(ProyectContext);
 
   useEffect(() => {
@@ -57,8 +58,8 @@ export default function ProyectOpener() {
         navigate(`/dashboard/${proyect._id}`);
       })
       .catch(response => {
-        setMessage(JSON.stringify(response.data));
-        setVisible(true);
+        const message = getMessageResponse(response.data);
+        setSnackMessage(message);
       });
   };
 

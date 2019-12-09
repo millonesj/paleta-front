@@ -3,13 +3,10 @@ import React, { createContext, useState } from 'react';
 const SnackbarContext = createContext();
 
 const SnackbarContextProvider = ({ children }) => {
-  const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState('');
+  const [snackMessage, setSnackMessage] = useState('');
 
   return (
-    <SnackbarContext.Provider
-      value={{ visible, setVisible, message, setMessage }}
-    >
+    <SnackbarContext.Provider value={{ snackMessage, setSnackMessage }}>
       {children}
     </SnackbarContext.Provider>
   );

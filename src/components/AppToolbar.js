@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { ColorContext } from '../contexts/colorContext';
 import { SnackbarContext } from '../contexts/SnackbarContext';
+import { UserContext } from '../contexts/UserContext';
 import { deleteToken, initAxiosInterceptors } from '../Helpers/auth-helper';
 import Axios from 'axios';
 import { ProyectContext } from '../contexts/ProyectContext';
@@ -17,7 +18,8 @@ initAxiosInterceptors();
 
 const AppToolbar = props => {
   const { color } = useContext(ColorContext);
-  const { setVisible, setMessage } = useContext(SnackbarContext);
+  const { setSnackMessage } = useContext(SnackbarContext);
+  const { currentUser } = useContext(UserContext);
   const [auth, setAuth] = React.useState(true);
   const [anchorEl_1, setAnchorEl_1] = React.useState(null);
   const open = Boolean(anchorEl_1);
@@ -33,8 +35,7 @@ const AppToolbar = props => {
   const handleChange = change => {
     setAuth(change);
     deleteToken();
-    setMessage('Cerrando sesión');
-    setVisible(true);
+    setSnackMessage('Cerrando sesión');
   };
 
   const handleMenu = event => {
@@ -55,8 +56,7 @@ const AppToolbar = props => {
       name: props.title,
       __v: currentProyect.__v + 1
     });
-    setMessage('Guardando Nombre');
-    setVisible(true);
+    setSnackMessage('Guardando Nombre');
     console.log('guardando');
   };
   return (
@@ -96,6 +96,9 @@ const AppToolbar = props => {
                 onClick={handleMenu}
               >
                 <AccountCircle />
+                <Typography variant="h6">
+                  {currentUser.name.split(' ')[0]}
+                </Typography>
               </IconButton>
               <Menu
                 id="menu-appbar"

@@ -21,6 +21,7 @@ import {
 import Axios from 'axios';
 import { navigate } from '@reach/router';
 import { SnackbarContext } from '../contexts/SnackbarContext';
+import { UserContext } from '../contexts/UserContext';
 import { getMessageResponse } from '../Helpers/utils';
 
 initAxiosInterceptors();
@@ -47,8 +48,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const { setVisible, setMessage } = useContext(SnackbarContext);
-  const [user, setUser] = useState(null);
+  const { setSnackMessage } = useContext(SnackbarContext);
+  const { setCurrentUser } = useContext(UserContext);
   const [loadingUser, setLoadingUser] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,8 +62,8 @@ export default function SignIn() {
       }
 
       try {
-        const { data: user } = await Axios.get('/users/whoami');
-        setUser(user);
+        const { data } = await Axios.get('/users/whoami');
+        setCurrentUser(data.user);
         setLoadingUser(false);
         navigate('/dashboard/');
       } catch (error) {
@@ -71,22 +72,19 @@ export default function SignIn() {
     }
 
     loadUser();
-  }, []);
+  }, [setCurrentUser]);
 
   const login = async (email, password) => {
     try {
-      setMessage('Iniciando sesión');
+      setSnackMessage('Iniciando sesión...');
       Axios.post('/users/login', { email, password })
         .then(response => {
-          setMessage('Iniciando sesión');
-          setVisible(true);
           setToken(response.data.token);
           navigate('/proyect-opener/');
         })
         .catch(error => {
           const message = getMessageResponse(error);
-          setMessage(message);
-          setVisible(true);
+          setSnackMessage(message);
         });
     } catch (error) {
       console.log(error);

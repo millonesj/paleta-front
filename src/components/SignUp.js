@@ -35,20 +35,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function FormDialog(prop) {
-  const [open, setOpen] = useState(prop.show);
   const [name, setName] = useState('');
-  const { setVisible, setMessage } = useContext(SnackbarContext);
+  const { setSnackMessage } = useContext(SnackbarContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [messageResponse, setMessageResponse] = useState('');
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const getToken = async (name, email, password) => {
     try {
@@ -56,13 +47,11 @@ export default function FormDialog(prop) {
         .then(response => {
           setToken(response.data.token);
           navigate('/proyect-opener/');
-          setMessage('Registrando');
-          setVisible(true);
+          setSnackMessage('Registrando');
         })
         .catch(response => {
           const message = getMessageResponse(response);
-          setMessage(message);
-          setVisible(true);
+          setSnackMessage(message);
           setMessageResponse(message);
         });
     } catch (error) {
