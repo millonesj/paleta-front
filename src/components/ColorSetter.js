@@ -1,5 +1,5 @@
 import 'rc-color-picker/assets/index.css';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Panel as ColorPickerPanel } from 'rc-color-picker';
 import { ColorContext } from '../contexts/ColorContext';
@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 var colorList = [
   {
-    color: '#2196f3',
+    color: '#0000FF',
     compId: 'toolBar',
     elementName: 'background'
   },
@@ -34,7 +34,7 @@ var colorList = [
     elementName: 'paletteTitleTxt'
   },
   {
-    color: '#2196f3',
+    color: '#0000FF',
     compId: 'paletteList',
     elementName: 'paletteTitleBg'
   },
@@ -66,11 +66,14 @@ const getTextColor = bgColor => {
 };
 const BtnColor = props => {
   let index = getIndex(props);
-  const { setColorBy } = useContext(ColorContext);
-  const [btnColor, setBtnColor] = useState(colorList[index].color);
-  const [textColor, setTextColor] = useState(
-    getTextColor(colorList[index].color)
-  );
+  const { color, setColorBy } = useContext(ColorContext);
+  const [btnColor, setBtnColor] = useState(color[index].color);
+  const [textColor, setTextColor] = useState(getTextColor(color[index].color));
+  useEffect(() => {
+    colorList = color;
+    setBtnColor(colorList[index].color);
+    setTextColor(getTextColor(colorList[index].color));
+  }, [color]);
   return (
     <Button
       style={{

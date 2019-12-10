@@ -20,6 +20,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
+import { SnackbarContext } from '../contexts/SnackbarContext';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 initAxiosInterceptors();
 
@@ -102,11 +105,12 @@ const PaletteItem = props => {
 };
 
 const PaletteList = () => {
-  const { color } = useContext(ColorContext);
+  const { color, setColorBy } = useContext(ColorContext);
   const { currentProyect } = useContext(ProyectContext);
+  const { setSnackMessage } = useContext(SnackbarContext);
   const [palettes, setPalettes] = useState([]);
   const [nameValue, changeNameValue] = useState('');
-  const [idPaletteSelected, setIdPaletteSelected] = useState('default');
+  const [idPaletteSelected, setIdPaletteSelected] = useState('');
   const [paletteSelectedName, setPaletteSelectedName] = useState('default');
 
   useEffect(() => {
@@ -138,13 +142,20 @@ const PaletteList = () => {
   };
   const changePaletteName = () => {
     Axios.put(`/palettes/${idPaletteSelected}`, {
-      name: nameValue
+      name: nameValue,
+      colors: color
     });
+    setSnackMessage('Guardando nombre y colores');
     let palettesAux = palettes;
     const index = getPaletteIndex(idPaletteSelected);
     palettesAux[index].name = nameValue;
-    console.log(palettesAux);
+    palettesAux[index].colors = color;
     setPalettes(palettesAux);
+  };
+
+  const setPaletteColors = id => {
+    const index = getPaletteIndex(id);
+    setColorBy(palettes[index].colors);
   };
 
   const addSaveAction = () => {
@@ -171,26 +182,32 @@ const PaletteList = () => {
           className={classes.root}
           style={{ backgroundColor: pBackground }}
         >
-          <Select
-            labelId="open-existing-palette-label"
-            fullWidth
-            style={{ paddingInline: '8px' }}
-            id="open-existing-palette"
-            value={idPaletteSelected}
-            onChange={event => {
-              console.log(event.target.value);
-              SelectedName(event.target.value);
-              setIdPaletteSelected(event.target.value);
-            }}
-          >
-            {palettes.map(palette => {
-              return (
-                <MenuItem value={palette._id} key={palette._id}>
-                  {palette.name}
-                </MenuItem>
-              );
-            })}
-          </Select>
+          <FormControl style={{ backgroundColor: 'white' }} fullWidth>
+            <InputLabel id="open-existing-palette-label">
+              Seleccionar paleta
+            </InputLabel>
+            <Select
+              labelId="open-existing-palette-label"
+              fullWidth
+              style={{ paddingInline: '8px' }}
+              id="open-existing-palette"
+              value={idPaletteSelected}
+              onChange={event => {
+                console.log(event.target.value);
+                SelectedName(event.target.value);
+                setIdPaletteSelected(event.target.value);
+                setPaletteColors(event.target.value);
+              }}
+            >
+              {palettes.map(palette => {
+                return (
+                  <MenuItem value={palette._id} key={palette._id}>
+                    {palette.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
           {paletteListModel.map(component => {
             return <div key={component.compId}>{PaletteItem(component)}</div>;
           })}
