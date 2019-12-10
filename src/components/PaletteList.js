@@ -111,8 +111,8 @@ const PaletteList = () => {
 
   useEffect(() => {
     if (currentProyect._id !== '') {
-      Axios.get(`/proyects/${currentProyect._id}`).then(response => {
-        const currentPalettes = response.data.payload.palettes;
+      Axios.get(`/proyects/${currentProyect._id}/palettes`).then(response => {
+        const currentPalettes = response.data.payload;
         setPalettes(currentPalettes);
       });
     }
