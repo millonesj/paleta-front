@@ -4,17 +4,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import SaveIcon from '@material-ui/icons/Save';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { ColorContext } from '../contexts/colorContext';
+import { ColorContext } from '../contexts/ColorContext';
 import { SnackbarContext } from '../contexts/SnackbarContext';
 import { UserContext } from '../contexts/UserContext';
-import { deleteToken, initAxiosInterceptors } from '../Helpers/auth-helper';
-import Axios from 'axios';
-import { ProyectContext } from '../contexts/ProyectContext';
-
-initAxiosInterceptors();
+import { deleteToken } from '../Helpers/auth-helper';
 
 const AppToolbar = props => {
   const { color } = useContext(ColorContext);
@@ -30,8 +25,6 @@ const AppToolbar = props => {
     c => c.compId === 'toolBar' && c.elementName === 'title and menu'
   ).color;
 
-  const { currentProyect, setCurrentProyectBy } = useContext(ProyectContext);
-
   const handleChange = change => {
     setAuth(change);
     deleteToken();
@@ -46,19 +39,6 @@ const AppToolbar = props => {
     setAnchorEl_1(null);
   };
 
-  const saveProject = () => {
-    Axios.put(`/proyects/${currentProyect._id}`, {
-      name: props.title,
-      __v: currentProyect.__v + 1
-    });
-    setCurrentProyectBy({
-      ...currentProyect,
-      name: props.title,
-      __v: currentProyect.__v + 1
-    });
-    setSnackMessage('Guardando Nombre');
-    console.log('guardando');
-  };
   return (
     <div>
       <AppBar
@@ -79,15 +59,6 @@ const AppToolbar = props => {
           </Typography>
           {auth ? (
             <div>
-              <IconButton
-                edge="end"
-                style={{
-                  color: tamColor
-                }}
-                onClick={saveProject}
-              >
-                <SaveIcon />
-              </IconButton>
               <IconButton
                 edge="end"
                 style={{

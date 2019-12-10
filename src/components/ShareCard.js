@@ -3,20 +3,38 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
 import { ProyectContext } from '../contexts/ProyectContext';
+import { SnackbarContext } from '../contexts/SnackbarContext';
+import Axios from 'axios';
+import { initAxiosInterceptors } from '../Helpers/auth-helper';
+
+initAxiosInterceptors();
+
 const ShareCard = props => {
   const [values, setValues] = useState({
     localName: '',
     localRoute: props.proyectId.location.href
   });
+  const { setSnackMessage } = useContext(SnackbarContext);
+  const { currentProyect, setCurrentProyectBy } = useContext(ProyectContext);
   const handleChange = name => event => {
     setValues({
       ...values,
       [name]: event.target.value
     });
+  };
+  const saveProyect = name => {
+    Axios.put(`/proyects/${currentProyect._id}`, {
+      name: name,
+      __v: currentProyect.__v + 1
+    });
+    setCurrentProyectBy({
+      ...currentProyect,
+      name: name,
+      __v: currentProyect.__v + 1
+    });
+    setSnackMessage('Guardando Nombre');
+    console.log('guardando');
   };
   return (
     <div style={{ textAlign: 'center' }}>
@@ -42,24 +60,12 @@ const ShareCard = props => {
               value={values.localName}
               onChange={handleChange('localName')}
             />
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    /* checked={state.checkedB} */
-                    onChange={handleChange('checkedB')}
-                    value="checkedB"
-                    color="primary"
-                  />
-                }
-                label="Primary"
-              />
-            </FormGroup>
             <Button
               color="primary"
               variant="contained"
               size="small"
               onClick={() => {
+                saveProyect(values.localName);
                 props.setName(values.localName);
               }}
             >

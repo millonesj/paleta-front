@@ -55,7 +55,15 @@ export default function ProyectOpener() {
       .then(response => {
         let proyect = response.data.payload;
         setCurrentProyectBy(proyect);
-        navigate(`/dashboard/${proyect._id}`);
+        Axios.post(`/palettes/${proyect._id}`)
+          .then(response => {
+            console.log(response);
+            navigate(`/dashboard/${proyect._id}`);
+          })
+          .catch(response => {
+            const message = getMessageResponse(response.data);
+            setSnackMessage(message);
+          });
       })
       .catch(response => {
         const message = getMessageResponse(response.data);

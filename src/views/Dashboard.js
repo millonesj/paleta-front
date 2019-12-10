@@ -14,7 +14,7 @@ import {
   initAxiosInterceptors
 } from '../Helpers/auth-helper';
 
-import { ColorProvider } from '../contexts/colorContext';
+import { ColorProvider } from '../contexts/ColorContext';
 import { ChatContextProvider } from '../contexts/ChatContext';
 import { ProyectContext } from '../contexts/ProyectContext';
 import { UserContext } from '../contexts/UserContext';
