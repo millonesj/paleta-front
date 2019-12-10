@@ -5,7 +5,7 @@ const ColorContext = React.createContext({});
 const ColorProvider = ({ children }) => {
   const [color, setColor] = useState([
     {
-      color: '#2196f3',
+      color: '#0000FF',
       compId: 'toolBar',
       elementName: 'background'
     },
@@ -30,7 +30,7 @@ const ColorProvider = ({ children }) => {
       elementName: 'paletteTitleTxt'
     },
     {
-      color: '#2196f3',
+      color: '#0000FF',
       compId: 'paletteList',
       elementName: 'paletteTitleBg'
     },
