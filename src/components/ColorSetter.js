@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 var colorList = [
   {
-    color: '#0000FF',
+    color: '#2196f3',
     compId: 'toolBar',
     elementName: 'background'
   },
@@ -34,7 +34,7 @@ var colorList = [
     elementName: 'paletteTitleTxt'
   },
   {
-    color: '#0000FF',
+    color: '#2196f3',
     compId: 'paletteList',
     elementName: 'paletteTitleBg'
   },
