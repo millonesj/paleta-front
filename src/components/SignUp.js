@@ -9,11 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { parseAsync } from '@babel/core';
-import { setToken, deleteToken } from '../Helpers/auth-helper';
+import { setToken, deleteToken } from '../helpers/auth-helper';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
-import { SnackbarContext } from '../contexts/SnackbarContext';
-import { getMessageResponse } from '../Helpers/utils';
+import { SnackbarContext } from '../hooks/SnackbarContext';
+import { getMessageResponse } from '../helpers/utils';
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),

@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useState } from 'react';
 import io from 'socket.io-client';
-import { getToken } from '../Helpers/auth-helper';
-import { ProyectContext } from '../contexts/ProyectContext';
+import { getToken } from '../helpers/auth-helper';
 
 // proyect:[{msg}, {msg}, ...]
 const initState = {

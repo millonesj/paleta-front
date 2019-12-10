@@ -17,12 +17,12 @@ import {
   deleteToken,
   getToken,
   initAxiosInterceptors
-} from '../Helpers/auth-helper';
+} from '../helpers/auth-helper';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
-import { SnackbarContext } from '../contexts/SnackbarContext';
-import { UserContext } from '../contexts/UserContext';
-import { getMessageResponse } from '../Helpers/utils';
+import { SnackbarContext } from '../hooks/SnackbarContext';
+import { UserContext } from '../hooks/UserContext';
+import { getMessageResponse } from '../helpers/utils';
 
 initAxiosInterceptors();
 

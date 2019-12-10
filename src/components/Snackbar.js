@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { SnackbarContext } from '../contexts/SnackbarContext';
+import { SnackbarContext } from '../hooks/SnackbarContext';
 
 const useStyles = makeStyles(theme => ({
   close: {

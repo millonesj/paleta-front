@@ -4,17 +4,17 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { initAxiosInterceptors } from '../Helpers/auth-helper';
+import { initAxiosInterceptors } from '../helpers/auth-helper';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
-import { SnackbarContext } from '../contexts/SnackbarContext';
+import { SnackbarContext } from '../hooks/SnackbarContext';
 
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import { ProyectContext } from '../contexts/ProyectContext';
-import { getMessageResponse } from '../Helpers/utils';
+import { ProyectContext } from '../hooks/ProyectContext';
+import { getMessageResponse } from '../helpers/utils';
 
 initAxiosInterceptors();
 const useStyles = makeStyles(theme => ({

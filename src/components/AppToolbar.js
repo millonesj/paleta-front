@@ -6,10 +6,10 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { ColorContext } from '../contexts/ColorContext';
-import { SnackbarContext } from '../contexts/SnackbarContext';
-import { UserContext } from '../contexts/UserContext';
-import { deleteToken } from '../Helpers/auth-helper';
+import { ColorContext } from '../hooks/ColorContext';
+import { SnackbarContext } from '../hooks/SnackbarContext';
+import { UserContext } from '../hooks/UserContext';
+import { deleteToken } from '../helpers/auth-helper';
 
 const AppToolbar = props => {
   const { color } = useContext(ColorContext);

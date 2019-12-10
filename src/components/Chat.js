@@ -11,10 +11,10 @@ import Chip from '@material-ui/core/Chip';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { changeTextValue, ChatContext } from '../contexts/ChatContext';
+import { changeTextValue, ChatContext } from '../hooks/ChatContext';
 import Box from '@material-ui/core/Box';
-import { UserContext } from '../contexts/UserContext';
-import { ProyectContext } from '../contexts/ProyectContext';
+import { UserContext } from '../hooks/UserContext';
+import { ProyectContext } from '../hooks/ProyectContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
