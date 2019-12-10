@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -15,6 +15,7 @@ const ShareCard = props => {
     localName: '',
     localRoute: props.proyectId.location.href
   });
+
   const { setSnackMessage } = useContext(SnackbarContext);
   const { currentProyect, setCurrentProyectBy } = useContext(ProyectContext);
   const handleChange = name => event => {
@@ -23,6 +24,11 @@ const ShareCard = props => {
       [name]: event.target.value
     });
   };
+
+  useEffect(() => {
+    setValues({ localName: currentProyect.name });
+  }, [currentProyect.name]);
+
   const saveProyect = name => {
     Axios.put(`/proyects/${currentProyect._id}`, {
       name: name,
