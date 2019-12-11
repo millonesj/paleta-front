@@ -171,16 +171,6 @@ const ColorSetter = () => {
               compId: 'paletteList',
               elementName: 'paletteSubTitleBg'
             })}
-            <br />
-            <br />
-            <button
-              onClick={() => {
-                console.log('Aplicando colores');
-                setColorBy(colorList);
-              }}
-            >
-              Aplicar Colores
-            </button>
           </div>
         </Grid>
       </Grid>

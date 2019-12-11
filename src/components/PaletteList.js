@@ -109,6 +109,7 @@ const PaletteList = () => {
   const { currentProyect } = useContext(ProyectContext);
   const { setSnackMessage } = useContext(SnackbarContext);
   const [palettes, setPalettes] = useState([]);
+  const [change, setChange] = useState(0);
   const [nameValue, changeNameValue] = useState('');
   const [idPaletteSelected, setIdPaletteSelected] = useState('');
   const [paletteSelectedName, setPaletteSelectedName] = useState('default');
@@ -119,8 +120,9 @@ const PaletteList = () => {
         const currentPalettes = response.data.payload;
         setPalettes(currentPalettes);
       });
+      setPaletteSelectedName('default');
     }
-  }, [currentProyect]);
+  }, [currentProyect, change]);
 
   const classes = useStyles();
   let pBackground = color.find(c => {
@@ -140,17 +142,44 @@ const PaletteList = () => {
     const index = getPaletteIndex(id);
     setPaletteSelectedName(palettes[index].name);
   };
-  const changePaletteName = () => {
-    Axios.put(`/palettes/${idPaletteSelected}`, {
+  const changePaletteName = id => {
+    Axios.put(`/palettes/${id}`, {
       name: nameValue,
       colors: color
+    }).then(response => {
+      setSnackMessage(response.data.message);
+      setChange(c => {
+        return 1 - c;
+      });
     });
-    setSnackMessage('Guardando nombre y colores');
-    let palettesAux = palettes;
-    const index = getPaletteIndex(idPaletteSelected);
-    palettesAux[index].name = nameValue;
-    palettesAux[index].colors = color;
-    setPalettes(palettesAux);
+  };
+
+  const addNewPalette = () => {
+    const paletteExist = palettes.find(paleta => {
+      return paleta.name == nameValue;
+    });
+    if (paletteExist) {
+      changePaletteName(paletteExist._id);
+    } else {
+      Axios.post(`/palettes/${currentProyect._id}`, {
+        name: nameValue,
+        colors: color
+      });
+      setSnackMessage('Creando paleta');
+      setChange(c => {
+        return 1 - c;
+      });
+    }
+  };
+
+  const deletePalette = () => {
+    Axios.delete(`/palettes/${idPaletteSelected}`).then(response => {
+      setSnackMessage(response.data.message);
+      console.log(response.data.paletteDeleted);
+      setChange(c => {
+        return 1 - c;
+      });
+    });
   };
 
   const setPaletteColors = id => {
@@ -160,9 +189,9 @@ const PaletteList = () => {
 
   const addSaveAction = () => {
     if (paletteSelectedName === 'default') {
-      console.log('añadiendo paleta');
+      addNewPalette();
     } else {
-      changePaletteName();
+      changePaletteName(idPaletteSelected);
     }
   };
 
@@ -193,7 +222,6 @@ const PaletteList = () => {
               id="open-existing-palette"
               value={idPaletteSelected}
               onChange={event => {
-                console.log(event.target.value);
                 SelectedName(event.target.value);
                 setIdPaletteSelected(event.target.value);
                 setPaletteColors(event.target.value);
@@ -212,31 +240,44 @@ const PaletteList = () => {
             return <div key={component.compId}>{PaletteItem(component)}</div>;
           })}
         </List>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <TextField
-            label="Nombre de paleta"
-            value={nameValue}
-            onChange={e => changeNameValue(e.target.value)}
-            className={classes.nameBox}
-            onKeyPress={ev => {
-              if (ev.key === 'Enter') {
-                // Do code here
-                ev.preventDefault();
-                addSaveAction();
-              }
-            }}
-          />
+        <TextField
+          label="Nombre de paleta"
+          value={nameValue}
+          onChange={e => changeNameValue(e.target.value)}
+          onKeyPress={ev => {
+            if (ev.key === 'Enter') {
+              // Do code here
+              ev.preventDefault();
+              addSaveAction();
+            }
+          }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: '4px' }}
+          onClick={() => {
+            addSaveAction();
+          }}
+        >
+          {paletteSelectedName === 'default'
+            ? 'CREATE PALETTE'
+            : 'UPDATE PALETTE'}
+        </Button>
+        {paletteSelectedName === 'default' ? (
+          <div></div>
+        ) : (
           <Button
             variant="contained"
             color="primary"
-            className={classes.actionBox}
+            style={{ marginTop: '4px' }}
             onClick={() => {
-              addSaveAction();
+              deletePalette();
             }}
           >
-            {paletteSelectedName === 'default' ? 'Add' : 'Save'}
+            DELETE PALETTE
           </Button>
-        </div>
+        )}
       </CardContent>
     </Card>
   );
