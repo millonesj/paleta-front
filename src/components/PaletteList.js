@@ -165,7 +165,7 @@ const PaletteList = () => {
         name: nameValue,
         colors: color
       }).then(response => {
-        setSnackMessage(response.date.message);
+        setSnackMessage(response.data.message);
         setChange(c => {
           return 1 - c;
         });
