@@ -8,11 +8,7 @@ import ColorSetter from '../components/ColorSetter';
 import PaletteList from '../components/PaletteList';
 import Chat from '../components/Chat';
 import ShareCard from '../components/ShareCard';
-import {
-  getCurrentUser,
-  deleteToken,
-  initAxiosInterceptors
-} from '../helpers/auth-helper';
+import { getCurrentUser, initAxiosInterceptors } from '../helpers/auth-helper';
 
 import { ColorProvider } from '../hooks/ColorContext';
 import { ChatContextProvider } from '../hooks/ChatContext';
