@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {
   setToken,
-  deleteToken,
   getToken,
   initAxiosInterceptors
 } from '../helpers/auth-helper';

@@ -156,7 +156,7 @@ const PaletteList = () => {
 
   const addNewPalette = () => {
     const paletteExist = palettes.find(paleta => {
-      return paleta.name == nameValue;
+      return paleta.name === nameValue;
     });
     if (paletteExist) {
       changePaletteName(paletteExist._id);
@@ -164,10 +164,11 @@ const PaletteList = () => {
       Axios.post(`/palettes/${currentProyect._id}`, {
         name: nameValue,
         colors: color
-      });
-      setSnackMessage('Creando paleta');
-      setChange(c => {
-        return 1 - c;
+      }).then(response => {
+        setSnackMessage(response.date.message);
+        setChange(c => {
+          return 1 - c;
+        });
       });
     }
   };

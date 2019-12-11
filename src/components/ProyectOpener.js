@@ -57,7 +57,7 @@ export default function ProyectOpener() {
         setCurrentProyectBy(proyect);
         Axios.post(`/palettes/${proyect._id}`)
           .then(response => {
-            console.log(response);
+            console.log(response.data.message);
             navigate(`/dashboard/${proyect._id}`);
           })
           .catch(response => {
