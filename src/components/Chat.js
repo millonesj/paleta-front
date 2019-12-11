@@ -94,12 +94,21 @@ export default function AlignItemsList() {
       <CardContent className={classes.CardContent}>
         <Box overflow="auto">
           <List>
-            {currentChats.map((chat, i) => (
-              <div key={i}>
-                <MessageLeft message={chat.msg} />
-              </div>
-            ))}
-            {/* <MessageRight/> */}
+            {currentChats.map((chat, i) => {
+              if (chat.from === currentUser.email) {
+                return (
+                  <div key={i}>
+                    <MessageRight message={chat.msg} />
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={i}>
+                    <MessageLeft message={chat.msg} />
+                  </div>
+                );
+              }
+            })}
           </List>
         </Box>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
