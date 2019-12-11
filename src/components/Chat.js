@@ -11,10 +11,10 @@ import Chip from '@material-ui/core/Chip';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { changeTextValue, ChatContext } from '../contexts/ChatContext';
+import { ChatContext } from '../hooks/ChatContext';
 import Box from '@material-ui/core/Box';
-import { UserContext } from '../contexts/UserContext';
-import { ProyectContext } from '../contexts/ProyectContext';
+import { UserContext } from '../hooks/UserContext';
+import { ProyectContext } from '../hooks/ProyectContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,14 +62,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function AlignItemsList() {
   const classes = useStyles();
-  const { setProyectChat, allChats, sendChatAction, user } = useContext(
-    ChatContext
-  );
+  const { allChats, sendChatAction, user } = useContext(ChatContext);
   const { currentUser } = useContext(UserContext);
   const { currentProyect } = useContext(ProyectContext);
-  const proyects = Object.keys(allChats);
   const [textValue, changeTextValue] = useState('');
-  const [listMessages, setListMessages] = useState('');
   const [currentChats, setCurrentChats] = useState([]);
 
   const handlerSendMessage = () => {
@@ -94,12 +90,21 @@ export default function AlignItemsList() {
       <CardContent className={classes.CardContent}>
         <Box overflow="auto">
           <List>
-            {currentChats.map((chat, i) => (
-              <div key={i}>
-                <MessageLeft message={chat.msg} />
-              </div>
-            ))}
-            {/* <MessageRight/> */}
+            {currentChats.map((chat, i) => {
+              if (chat.from === currentUser.email) {
+                return (
+                  <div key={i}>
+                    <MessageRight message={chat.msg} />
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={i}>
+                    <MessageLeft message={chat.msg} />
+                  </div>
+                );
+              }
+            })}
           </List>
         </Box>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useState } from 'react';
 import io from 'socket.io-client';
-import { getToken } from '../Helpers/auth-helper';
-import { ProyectContext } from '../contexts/ProyectContext';
+import { getToken } from '../helpers/auth-helper';
 
 // proyect:[{msg}, {msg}, ...]
 const initState = {
@@ -39,10 +38,10 @@ const sendChatAction = value => {
 const ChatContextProvider = props => {
   const [proyectChat, setProyectChat] = useState({});
   const [allChats, dispatch] = useReducer(reducer, initState);
-  const user = 'Jhonny' + Math.random(100).toFixed(2);
+  const user = '';
 
   if (!socket) {
-    socket = io(':3001', {
+    socket = io(process.env.REACT_APP_URL_CHAT, {
       query: {
         token: getToken()
       }

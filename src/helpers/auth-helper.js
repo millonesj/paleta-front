@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const TOKEN_KEY = 'PALETTE_TOKEN_KEY';
+const TOKEN_KEY = process.env.REACT_APP_NAME_TOKEN;
 
 export function setToken(token) {
   localStorage.setItem(TOKEN_KEY, token);

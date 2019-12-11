@@ -1,5 +1,4 @@
 import React, { createContext, useState } from 'react';
-import { palette } from '@material-ui/system';
 
 const ProyectContext = createContext();
 
