@@ -1,9 +1,9 @@
 import React from 'react';
 import { Router } from '@reach/router';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
+import SignIn from './views/SignIn';
+import SignUp from './views/SignUp';
 import Dashboard from './views/Dashboard';
-import OpenerProyect from './components/ProyectOpener';
+import OpenerProyect from './views/ProyectOpener';
 
 const router = () => {
   return (
